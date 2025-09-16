@@ -1,11 +1,16 @@
-import { useState, useEffect } from 'react';
-import  { useRef } from "react";
+import { useState, useEffect, useRef } from 'react';
 import AboutJharkhand from "./aboutjharkhand.jsx";
 import Gallery from "./gallery.jsx";
+import Contact from "./contact.jsx";
+import Footer from "./footer.jsx";
 
 const JharkhandTourismHero = () => {
-      const aboutRef = useRef(null); 
-      const galleryref = useRef(null);
+  const aboutRef = useRef(null); 
+  const galleryRef = useRef(null);
+  const contactRef = useRef(null);
+  const footerRef = useRef(null);
+  const heroRef = useRef(null); // Ref for the hero section itself
+
   const [isVisible, setIsVisible] = useState(false);
   const [activeLink, setActiveLink] = useState('Home');
 
@@ -17,7 +22,26 @@ const JharkhandTourismHero = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  const navLinks = ['Home', 'About', 'Places', 'Culture', 'Plan Trip', 'Contact'];
+  // Map of link names to their refs
+  const sectionRefs = {
+    'Home': heroRef,
+    'About': aboutRef,
+    'Places': galleryRef, // Using Gallery for 'Places'
+ // No ref for Culture, so it won't scroll
+    'Plan Trip': null, // No ref for Plan Trip, so it won't scroll
+    'Contact': contactRef,
+  };
+
+  const navLinks = ['Home', 'About', 'Places',  'Plan Trip', 'Contact'];
+
+  // Function to handle smooth scrolling
+  const handleScrollToSection = (linkName) => {
+    setActiveLink(linkName);
+    const ref = sectionRefs[linkName];
+    if (ref && ref.current) {
+      ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   return (
     <div className="bg-white">
@@ -41,7 +65,7 @@ const JharkhandTourismHero = () => {
                 {navLinks.map((link) => (
                   <button
                     key={link}
-                    onClick={() => setActiveLink(link)}
+                    onClick={() => handleScrollToSection(link)}
                     className={`relative px-3 py-2 text-sm lg:text-base font-medium transition-all duration-300 ${
                       activeLink === link
                         ? 'text-emerald-600'
@@ -61,11 +85,11 @@ const JharkhandTourismHero = () => {
             <div className="flex items-center space-x-4">
               {/* Login Button */}
               <button
-                className="px-4 py-2 text-sm lg:text-base font-medium text-gray-700 hover:text-emerald-600 transition-all duration-300 rounded-full"
-                onClick={() => console.log('Login clicked')}
-              >
-                Login
-              </button>
+                    className="px-4 py-2 text-sm lg:text-base font-medium text-gray-700 hover:text-emerald-600 transition-all duration-300 rounded-full"
+                    onClick={() => window.location.href = '/mainauth'}
+                                >
+                                  Login
+                    </button>
 
               {/* Register Button with enhanced animation */}
               <button
@@ -88,7 +112,7 @@ const JharkhandTourismHero = () => {
       </nav>
 
       {/* Hero Section */}
-      <div className="relative h-screen mt-16 lg:mt-20 overflow-hidden">
+      <div ref={heroRef} className="relative h-screen mt-16 lg:mt-20 overflow-hidden">
         {/* Video Background */}
         <div className="absolute inset-0 w-full h-full">
           <video
@@ -136,7 +160,7 @@ const JharkhandTourismHero = () => {
                 {/* CTA Buttons */}
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button className="px-8 py-4 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-lg rounded-full transition-all duration-300 transform hover:scale-105 shadow-xl">
-                    Explore Now
+                    Start selling
                   </button>
                   <button className="px-8 py-4 border-2 border-white/80 hover:border-white text-white hover:bg-white hover:text-gray-900 font-semibold text-lg rounded-full transition-all duration-300 backdrop-blur-sm">
                     Plan Your Trip
@@ -152,11 +176,17 @@ const JharkhandTourismHero = () => {
       <div className="bg-white h-20"></div>
 
       <div ref={aboutRef}>
-        <AboutJharkhand /> {/* ✅ Capitalized component */}
+        <AboutJharkhand />
       </div>
-      <div ref={galleryref}>
+      <div ref={galleryRef}>
         <Gallery />
-        </div>
+      </div>
+      <div ref={contactRef}>
+        <Contact />
+      </div>
+      <div ref={footerRef}>
+        <Footer/>
+      </div>
     </div>
 
   );
