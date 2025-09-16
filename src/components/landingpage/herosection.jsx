@@ -5,7 +5,7 @@ import Contact from "./contact.jsx";
 import Footer from "./footer.jsx";
 
 const JharkhandTourismHero = () => {
-  const aboutRef = useRef(null); 
+  const aboutRef = useRef(null);
   const galleryRef = useRef(null);
   const contactRef = useRef(null);
   const footerRef = useRef(null);
@@ -27,12 +27,12 @@ const JharkhandTourismHero = () => {
     'Home': heroRef,
     'About': aboutRef,
     'Places': galleryRef, // Using Gallery for 'Places'
- // No ref for Culture, so it won't scroll
+    // No ref for Culture, so it won't scroll
     'Plan Trip': null, // No ref for Plan Trip, so it won't scroll
     'Contact': contactRef,
   };
 
-  const navLinks = ['Home', 'About', 'Places',  'Plan Trip', 'Contact'];
+  const navLinks = ['Home', 'About', 'Places', 'Plan Trip', 'Contact'];
 
   // Function to handle smooth scrolling
   const handleScrollToSection = (linkName) => {
@@ -70,7 +70,7 @@ const JharkhandTourismHero = () => {
                       activeLink === link
                         ? 'text-emerald-600'
                         : 'text-gray-700 hover:text-emerald-600'
-                    }`}
+                    } cursor-pointer`} // Added cursor-pointer here
                   >
                     {link}
                     {activeLink === link && (
@@ -85,22 +85,24 @@ const JharkhandTourismHero = () => {
             <div className="flex items-center space-x-4">
               {/* Login Button */}
               <button
-                    className="px-4 py-2 text-sm lg:text-base font-medium text-gray-700 hover:text-emerald-600 transition-all duration-300 rounded-full"
-                    onClick={() => window.location.href = '/mainauth'}
-                                >
-                                  Login
-                    </button>
+                className="px-4 py-2 text-sm lg:text-base font-medium text-gray-700 hover:text-emerald-600 transition-all duration-300 rounded-full cursor-pointer" // Added cursor-pointer here
+                onClick={() => window.location.href = '/mainauth'}
+              >
+                Login
+              </button>
 
               {/* Register Button with enhanced animation */}
               <button
-                className="px-4 py-2 text-sm lg:text-base font-medium text-white bg-emerald-600 rounded-full transition-all duration-300 transform hover:scale-105 hover:bg-emerald-700 shadow-lg"
-                onClick={() => console.log('Register clicked')}
+                className="px-4 py-2 text-sm lg:text-base font-medium text-white bg-emerald-600 rounded-full transition-all duration-300 transform hover:scale-105 hover:bg-emerald-700 shadow-lg cursor-pointer" // Added cursor-pointer here
+                onClick={() => window.location.href = '/mainauth'}
               >
                 Register
               </button>
               
               <div className="md:hidden">
-                <button className="text-gray-700 hover:text-emerald-600 transition-colors duration-300">
+                <button 
+                  className="text-gray-700 hover:text-emerald-600 transition-colors duration-300 cursor-pointer" // Added cursor-pointer here
+                >
                   <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
                   </svg>
@@ -159,10 +161,10 @@ const JharkhandTourismHero = () => {
 
                 {/* CTA Buttons */}
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <button className="px-8 py-4 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-lg rounded-full transition-all duration-300 transform hover:scale-105 shadow-xl">
+                  <button className="px-8 py-4 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-lg rounded-full transition-all duration-300 transform hover:scale-105 shadow-xl cursor-pointer"> 
                     Start selling
                   </button>
-                  <button className="px-8 py-4 border-2 border-white/80 hover:border-white text-white hover:bg-white hover:text-gray-900 font-semibold text-lg rounded-full transition-all duration-300 backdrop-blur-sm">
+                  <button className="px-8 py-4 border-2 border-white/80 hover:border-white text-white hover:bg-white hover:text-gray-900 font-semibold text-lg rounded-full transition-all duration-300 backdrop-blur-sm cursor-pointer"> 
                     Plan Your Trip
                   </button>
                 </div>
@@ -188,7 +190,6 @@ const JharkhandTourismHero = () => {
         <Footer/>
       </div>
     </div>
-
   );
 };
 

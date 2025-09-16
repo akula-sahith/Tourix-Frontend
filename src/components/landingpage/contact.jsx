@@ -222,7 +222,7 @@ const FAQContactSection = () => {
 
               {/* Contact Information */}
               <div className="space-y-6 mb-8">
-                <div className="flex items-center gap-4 p-4 rounded-xl bg-emerald-50 hover:bg-emerald-100 transition-all duration-300">
+                <div className="flex items-center gap-4 p-4 rounded-xl bg-emerald-50 hover:bg-emerald-100 transition-all duration-300 cursor-pointer"> {/* Added cursor-pointer here */}
                   <div className="flex-shrink-0">
                     <Mail className="w-6 h-6 text-emerald-600" />
                   </div>
@@ -242,7 +242,7 @@ const FAQContactSection = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-4 p-4 rounded-xl bg-emerald-50 hover:bg-emerald-100 transition-all duration-300">
+                <div className="flex items-center gap-4 p-4 rounded-xl bg-emerald-50 hover:bg-emerald-100 transition-all duration-300 cursor-pointer"> {/* Added cursor-pointer here */}
                   <div className="flex-shrink-0">
                     <Phone className="w-6 h-6 text-emerald-600" />
                   </div>
@@ -347,7 +347,7 @@ const FAQContactSection = () => {
                   className={`w-full rounded-xl font-semibold py-3 px-6 text-white transition-all duration-300 transform hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-opacity-50 flex items-center justify-center gap-2 text-sm ${
                     isSubmitting 
                       ? 'bg-gray-400 cursor-not-allowed' 
-                      : 'bg-emerald-600 hover:bg-gradient-to-r hover:from-emerald-500 hover:via-teal-500 hover:to-green-500 focus:ring-emerald-500'
+                      : 'bg-emerald-600 hover:bg-gradient-to-r hover:from-emerald-500 hover:via-teal-500 hover:to-green-500 focus:ring-emerald-500 cursor-pointer' // Added cursor-pointer here
                   }`}
                   style={{ fontFamily: 'Aptos, sans-serif' }}
                 >

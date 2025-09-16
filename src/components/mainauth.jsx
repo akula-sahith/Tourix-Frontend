@@ -185,20 +185,7 @@ const AuthenticationPage = () => {
                 Login
               </button>
               
-              <div className="space-y-1">
-                <p className="text-gray-600 text-sm">Don't have an account?</p>
-                <div className="space-x-1 text-sm">
-                  <button className="font-medium hover:underline transition-all duration-200"
-                          style={{ color: roles[1].color }}>
-                    Contact Sales
-                  </button>
-                  <span className="text-gray-400">or</span>
-                  <button className="font-medium hover:underline transition-all duration-200"
-                          style={{ color: roles[1].color }}>
-                    Free Trial
-                  </button>
-                </div>
-              </div>
+              
             </div>
 
             {/* Vendor Icon */}
@@ -253,16 +240,10 @@ const AuthenticationPage = () => {
                 onMouseEnter={(e) => e.target.style.backgroundColor = roles[2].hoverColor}
                 onMouseLeave={(e) => e.target.style.backgroundColor = roles[2].color}
               >
-                Login
+                Join as Vendor
               </button>
               
-              <div className="space-y-1">
-                <p className="text-gray-600 text-sm">Don't have an account?</p>
-                <button className="font-medium hover:underline transition-all duration-200 text-sm"
-                        style={{ color: roles[2].color }}>
-                  Contact Support.
-                </button>
-              </div>
+            
             </div>
 
             {/* Admin Icon */}
