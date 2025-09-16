@@ -130,7 +130,7 @@ const JharkhandGallery = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Rainbow Gradient Title */}
         <div className="text-center mb-12">
-          <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-red-500 via-yellow-500 via-green-500 via-blue-500 via-indigo-500 to-purple-500 bg-clip-text text-transparent animate-pulse">
+          <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-red-500 via-yellow-500 via-green-500 via-blue-500 via-indigo-500 to-purple-500 bg-clip-text text-transparent animate-pulse cursor-default">
             Explore Jharkhand
           </h2>
           <div className="mt-2 h-1 w-32 mx-auto bg-gradient-to-r from-red-500 via-yellow-500 via-green-500 via-blue-500 via-indigo-500 to-purple-500 rounded-full animate-pulse"></div>
@@ -146,7 +146,7 @@ const JharkhandGallery = () => {
                 activeCategory === category
                   ? 'bg-yellow-400 text-black shadow-lg'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              }`}
+              } cursor-pointer`}
             >
               {category}
             </button>
@@ -154,15 +154,23 @@ const JharkhandGallery = () => {
         </div>
 
         {/* Carousel Gallery */}
-        <div className={`relative w-full h-[60vh] md:h-[70vh] flex items-center justify-center transition-opacity duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+        <div 
+          className={`relative w-full h-[60vh] md:h-[70vh] flex items-center justify-center transition-opacity duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}
+          // Adding cursor-pointer here to indicate the carousel is interactive, e.g., for swiping
+          // You might not need this if you don't implement click/drag to change images
+          // But it's good practice for gallery components
+          // If the image itself is clickable, you would apply it to the <img> tag or parent div.
+          // Since the gallery is an auto-looping carousel, we'll keep it on the images.
+        >
           {currentImages.map((image, index) => {
             const style = getImageStyle(index);
 
             return (
               <div
                 key={index}
-                className="absolute w-80 h-[28rem] md:w-96 md:h-[32rem] rounded-3xl overflow-hidden shadow-xl transition-all duration-1000 ease-in-out"
+                className="absolute w-80 h-[28rem] md:w-96 md:h-[32rem] rounded-3xl overflow-hidden shadow-xl transition-all duration-1000 ease-in-out cursor-pointer"
                 style={style}
+                onClick={() => setCurrentImageIndex(index)}
               >
                 <img
                   src={image.src}

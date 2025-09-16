@@ -96,7 +96,7 @@ const AboutJharkhandSection = () => {
                 isVisible.aboutText ? 'translate-x-0 opacity-100' : '-translate-x-12 opacity-0'
               }`}
             >
-              <h2 className="text-4xl lg:text-5xl font-bold mb-8 italic bg-gradient-to-r from-emerald-600 via-blue-500 to-purple-600 bg-clip-text text-transparent hover:from-red-500 hover:via-yellow-500 hover:to-green-500 transition-all duration-500 cursor-default">
+              <h2 className="text-4xl lg:text-5xl font-bold mb-8 italic bg-gradient-to-r from-emerald-600 via-blue-500 to-purple-600 bg-clip-text text-transparent hover:from-red-500 hover:via-yellow-500 hover:to-green-500 transition-all duration-500 cursor-pointer">
                 About Jharkhand
               </h2>
               
@@ -104,7 +104,7 @@ const AboutJharkhandSection = () => {
                 Jharkhand, a land of majestic mountains, lush forests, and cascading waterfalls, offers an unparalleled opportunity to connect with unspoiled nature. Beyond its breathtaking scenery, Jharkhand is home to prominent museums, temples, and wildlife sanctuaries. Emerging from Bihar nearly two decades ago, the state has forged its own path, marked by a fascinating history, diverse culture, and the cherished simplicity of its tribal communities.
               </p>
 
-              <button className="px-8 py-4 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold text-lg rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+              <button className="px-8 py-4 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold text-lg rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl cursor-pointer">
                 Learn More
               </button>
             </div>
@@ -157,7 +157,7 @@ const AboutJharkhandSection = () => {
             {visitHighlights.map((item, index) => (
               <div 
                 key={index} 
-                className="bg-gray-50 rounded-2xl p-6 shadow-md border border-gray-100 transform transition-all duration-500 hover:scale-105 hover:shadow-xl group"
+                className="bg-gray-50 rounded-2xl p-6 shadow-md border border-gray-100 transform transition-all duration-500 hover:scale-105 hover:shadow-xl group cursor-pointer" // Added cursor-pointer here
               >
                 <div className="h-48 w-full rounded-xl overflow-hidden mb-6">
                   <img 
@@ -185,7 +185,7 @@ const AboutJharkhandSection = () => {
             <p className="text-gray-600 max-w-2xl mx-auto mb-8">
               From the serene beauty of its waterfalls to its rich cultural tapestry and bustling modern cities, Jharkhand has something for every traveler.
             </p>
-            <button className="px-10 py-4 bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold text-xl rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl">
+            <button className="px-10 py-4 bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold text-xl rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl cursor-pointer">
               Plan Your Trip
             </button>
           </div>
@@ -222,7 +222,7 @@ const AboutJharkhandSection = () => {
                 isVisible.video ? 'translate-x-0 opacity-100' : 'translate-x-12 opacity-0'
               }`}
             >
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl group">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl group cursor-pointer"> 
                 <video
                   className="w-full h-96 lg:h-[500px] object-cover transform group-hover:scale-105 transition-transform duration-700"
                   autoPlay
