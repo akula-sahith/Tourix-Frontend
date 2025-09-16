@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { 
   User, 
   LogOut, 
@@ -26,6 +27,7 @@ import {
 } from 'lucide-react';
 
 const JharkhandDashboard = () => {
+  const navigate = useNavigate(); // Initialize the hook here
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [userName] = useState("Pandu");
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -196,7 +198,7 @@ const JharkhandDashboard = () => {
       title: "AI Tour Planner",
       description: "Intelligent itinerary generation with personalized recommendations",
       icon: Bot,
-      route: "/ai-tour-planner",
+      route: "/trip", // Corrected route path to match App.jsx
       gradient: "from-blue-500 to-indigo-600",
     },
     {
@@ -214,17 +216,24 @@ const JharkhandDashboard = () => {
       icon: Mountain,
       route: "/places",
       gradient: "from-teal-500 to-cyan-600",
+    },
+    {
+      id: 4,
+      title: "Handicrafts Marketplace",
+      description: "Order authentic tribal crafts directly from local artisans",
+      icon: Compass,
+      route: "/handicrafts",
+      gradient: "from-purple-500 to-pink-600",
     }
   ];
 
   const handleNavigation = (route) => {
     console.log(`Navigating to: ${route}`);
-    // Navigation logic would go here
+    navigate(route); // Use the navigate function
   };
 
   const handleLogout = () => {
-    console.log('Logging out...');
-    // Logout logic would go here
+    window.location.href = '/mainauth';
   };
 
   const BookingModal = ({ booking, onClose }) => {
@@ -233,91 +242,117 @@ const JharkhandDashboard = () => {
     const Icon = booking.type === 'guide' ? UserCheck : booking.type === 'homestay' ? Home : Award;
 
     return (
-      <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-300">
-        <div className="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-2xl transform scale-100 transition-all duration-500 animate-in slide-in-from-bottom-4">
-          <div className="flex justify-between items-center mb-8">
-            <h3 className="text-3xl font-bold text-gray-800 italic">
+      <div 
+        className="fixed inset-0 z-[9999] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 cursor-default"
+        onClick={onClose}
+      >
+        <div 
+          className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[85vh] flex flex-col cursor-auto"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Header - Fixed */}
+          <div className="flex-shrink-0 bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center rounded-t-2xl">
+            <h3 className="text-xl font-bold text-gray-800 italic">
               Booking Details
             </h3>
             <button 
               onClick={onClose} 
-              className="p-3 rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-all duration-200 cursor-pointer group"
+              className="p-2 rounded-full text-gray-500 hover:bg-red-50 hover:text-red-600 transition-all duration-200 cursor-pointer flex items-center justify-center"
+              title="Close"
             >
-              <X className="w-6 h-6 group-hover:rotate-90 transition-transform duration-300" />
+              <X className="w-5 h-5" />
             </button>
           </div>
           
-          <div className="space-y-6">
-            <div className="flex items-center gap-4 p-6 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200">
-              <Icon className="w-10 h-10 text-blue-600" />
-              <div>
-                <h4 className="text-xl font-bold text-gray-800 italic">{booking.service}</h4>
-                <p className="text-sm text-blue-600">ID: {booking.bookingId}</p>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-2xl hover:bg-gray-100 transition-colors duration-200">
-                <Calendar className="w-5 h-5 text-gray-500" />
-                <div className="text-sm">
-                  <p className="text-gray-600 italic">Date</p>
-                  <p className="font-semibold text-gray-800">{booking.date}</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-2xl hover:bg-gray-100 transition-colors duration-200">
-                <Clock className="w-5 h-5 text-gray-500" />
-                <div className="text-sm">
-                  <p className="text-gray-600 italic">Time</p>
-                  <p className="font-semibold text-gray-800">{booking.time || booking.duration}</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-2xl hover:bg-gray-100 transition-colors duration-200">
-                <MapPin className="w-5 h-5 text-gray-500" />
-                <div className="text-sm">
-                  <p className="text-gray-600 italic">Location</p>
-                  <p className="font-semibold text-gray-800">{booking.location}</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-3 p-4 bg-gray-50 rounded-2xl hover:bg-gray-100 transition-colors duration-200">
-                <CreditCard className="w-5 h-5 text-gray-500" />
-                <div className="text-sm">
-                  <p className="text-gray-600 italic">Price</p>
-                  <p className="font-semibold text-gray-800">{booking.price}</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-gray-50">
-              <h5 className="font-bold text-gray-800 mb-3 italic">Service Provider</h5>
-              <div className="flex items-center gap-4">
-                <UserCheck className="w-5 h-5 text-gray-500" />
+          {/* Scrollable Content */}
+          <div className="flex-1 overflow-y-auto px-6 py-4">
+            <div className="space-y-4">
+              {/* Service Header */}
+              <div className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200">
+                <Icon className="w-8 h-8 text-blue-600" />
                 <div>
-                  <p className="font-semibold text-gray-800">{booking.vendor}</p>
-                  <p className="text-sm text-gray-600 flex items-center gap-2">
-                    <Phone className="w-4 h-4" /> {booking.vendorContact}
-                  </p>
+                  <h4 className="text-lg font-bold text-gray-800 italic">{booking.service}</h4>
+                  <p className="text-sm text-blue-600">ID: {booking.bookingId}</p>
                 </div>
               </div>
-            </div>
 
-            <div className="p-6 rounded-2xl bg-gray-50">
-              <h5 className="font-bold text-gray-800 mb-3 italic">Description</h5>
-              <p className="text-gray-600 leading-relaxed">{booking.description}</p>
-            </div>
-
-            {booking.inclusions && (
-              <div className="p-6 rounded-2xl bg-gray-50">
-                <h5 className="font-bold text-gray-800 mb-3 italic">Inclusions</h5>
-                <div className="grid grid-cols-2 gap-2">
-                  {booking.inclusions.map((item, index) => (
-                    <div key={index} className="flex items-center gap-2 text-sm text-gray-600">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span>{item}</span>
-                    </div>
-                  ))}
+              {/* Details Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+                  <Calendar className="w-4 h-4 text-gray-500" />
+                  <div>
+                    <p className="text-gray-600 italic text-xs">Date</p>
+                    <p className="font-semibold text-gray-800 text-sm">{booking.date}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+                  <Clock className="w-4 h-4 text-gray-500" />
+                  <div>
+                    <p className="text-gray-600 italic text-xs">Time</p>
+                    <p className="font-semibold text-gray-800 text-sm">{booking.time || booking.duration}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+                  <MapPin className="w-4 h-4 text-gray-500" />
+                  <div>
+                    <p className="text-gray-600 italic text-xs">Location</p>
+                    <p className="font-semibold text-gray-800 text-sm">{booking.location}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl">
+                  <CreditCard className="w-4 h-4 text-gray-500" />
+                  <div>
+                    <p className="text-gray-600 italic text-xs">Price</p>
+                    <p className="font-semibold text-gray-800 text-sm">{booking.price}</p>
+                  </div>
                 </div>
               </div>
-            )}
+
+              {/* Service Provider */}
+              <div className="p-4 rounded-xl bg-gray-50">
+                <h5 className="font-bold text-gray-800 mb-3 italic text-sm">Service Provider</h5>
+                <div className="flex items-center gap-3">
+                  <UserCheck className="w-4 h-4 text-gray-500" />
+                  <div>
+                    <p className="font-semibold text-gray-800 text-sm">{booking.vendor}</p>
+                    <p className="text-xs text-gray-600 flex items-center gap-2 mt-1">
+                      <Phone className="w-3 h-3" /> {booking.vendorContact}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Description */}
+              <div className="p-4 rounded-xl bg-gray-50">
+                <h5 className="font-bold text-gray-800 mb-2 italic text-sm">Description</h5>
+                <p className="text-gray-600 leading-relaxed text-sm">{booking.description}</p>
+              </div>
+
+              {/* Inclusions */}
+              {booking.inclusions && (
+                <div className="p-4 rounded-xl bg-gray-50">
+                  <h5 className="font-bold text-gray-800 mb-3 italic text-sm">Inclusions</h5>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    {booking.inclusions.map((item, index) => (
+                      <div key={index} className="flex items-start gap-2 text-xs text-gray-600">
+                        <CheckCircle className="w-3 h-3 text-green-500 flex-shrink-0 mt-0.5" />
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+          
+          {/* Footer - Fixed */}
+          <div className="flex-shrink-0 bg-gray-50 px-6 py-3 border-t border-gray-200 rounded-b-2xl">
+            <button 
+              onClick={onClose}
+              className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white py-2 px-4 rounded-xl font-semibold italic hover:from-green-700 hover:to-emerald-700 transition-all duration-300 cursor-pointer text-sm"
+            >
+              Close Details
+            </button>
           </div>
         </div>
       </div>
@@ -411,7 +446,7 @@ const JharkhandDashboard = () => {
           <h3 className="text-4xl font-serif italic text-center text-transparent bg-gradient-to-r from-green-800 to-emerald-700 bg-clip-text mb-12 hover:scale-105 transition-transform duration-300 cursor-default">
             Explore Jharkhand's Wonders
           </h3>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6">
             {featureCards.map((card, index) => {
               const Icon = card.icon;
               return (
@@ -420,24 +455,24 @@ const JharkhandDashboard = () => {
                   className="group cursor-pointer"
                   onClick={() => handleNavigation(card.route)}
                 >
-                  <div className="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 p-8 border border-gray-200 overflow-hidden group-hover:scale-105 group-hover:-translate-y-2 group-hover:border-transparent relative">
+                  <div className="bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 p-6 border border-gray-200 overflow-hidden group-hover:scale-105 group-hover:-translate-y-2 group-hover:border-transparent relative h-full flex flex-col">
                     <div className={`absolute inset-0 bg-gradient-to-br ${card.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
                     
-                    <div className="relative z-10">
-                      <div className={`w-20 h-20 bg-gradient-to-br ${card.gradient} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-lg`}>
-                        <Icon className="w-10 h-10 text-white" />
+                    <div className="relative z-10 flex flex-col h-full">
+                      <div className={`w-16 h-16 bg-gradient-to-br ${card.gradient} rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-lg`}>
+                        <Icon className="w-8 h-8 text-white" />
                       </div>
                       
-                      <h4 className="text-2xl font-bold text-gray-800 mb-4 italic group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:from-green-700 group-hover:to-emerald-600 transition-all duration-300">
+                      <h4 className="text-lg font-bold text-gray-800 mb-3 italic group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:bg-clip-text group-hover:from-green-700 group-hover:to-emerald-600 transition-all duration-300">
                         {card.title}
                       </h4>
                       
-                      <p className="text-gray-600 mb-6 leading-relaxed italic">
+                      <p className="text-gray-600 mb-4 leading-relaxed italic text-sm flex-grow">
                         {card.description}
                       </p>
                       
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center text-green-700 font-semibold group-hover:text-emerald-600 transition-colors duration-300 italic">
+                      <div className="flex items-center justify-between mt-auto">
+                        <div className="flex items-center text-green-700 font-semibold group-hover:text-emerald-600 transition-colors duration-300 italic text-sm">
                           <span>Explore Now</span>
                           <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-2 transition-transform duration-300" />
                         </div>
@@ -506,37 +541,37 @@ const JharkhandDashboard = () => {
               <h3 className="text-2xl font-bold text-gray-800 italic">Past Bookings</h3>
             </div>
             
-            <div className="space-y-4 max-h-96 overflow-y-auto pr-2">
+            <div className="space-y-3 max-h-[500px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-green-300 scrollbar-track-green-50">
               {pastBookings.map((booking) => (
                 <div 
                   key={booking.id} 
-                  className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-200 cursor-pointer hover:shadow-lg hover:scale-[1.02] transition-all duration-300 group"
+                  className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 border border-green-200 cursor-pointer hover:shadow-md hover:scale-[1.01] transition-all duration-300 group"
                   onClick={() => setSelectedBooking(booking)}
                 >
-                  <div className="flex justify-between items-start mb-4">
-                    <div>
-                      <h4 className="font-bold text-gray-800 text-lg italic group-hover:text-green-700 transition-colors duration-300">{booking.service}</h4>
-                      <p className="text-gray-600 flex items-center gap-2 mt-1 italic">
-                        <MapPin className="w-4 h-4" />
-                        {booking.location}
+                  <div className="flex justify-between items-start mb-3">
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-bold text-gray-800 text-base italic group-hover:text-green-700 transition-colors duration-300 truncate">{booking.service}</h4>
+                      <p className="text-gray-600 flex items-center gap-2 mt-1 italic text-sm">
+                        <MapPin className="w-3 h-3 flex-shrink-0" />
+                        <span className="truncate">{booking.location}</span>
                       </p>
-                      <p className="text-sm text-green-600 mt-1 italic opacity-70 group-hover:opacity-100 transition-opacity duration-300">Click for details →</p>
+                      <p className="text-xs text-green-600 mt-1 italic opacity-70 group-hover:opacity-100 transition-opacity duration-300">Click for details →</p>
                     </div>
-                    <div className="text-right">
-                      <p className="font-semibold text-green-700 italic">{booking.date}</p>
+                    <div className="text-right flex-shrink-0 ml-3">
+                      <p className="font-semibold text-green-700 italic text-sm">{booking.date}</p>
                     </div>
                   </div>
                   
-                  <div className="flex items-center justify-between bg-white rounded-xl p-3 shadow-sm">
+                  <div className="flex items-center justify-between bg-white rounded-lg p-3 shadow-sm">
                     <div className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span className="font-medium text-gray-800 italic">{booking.status}</span>
+                      <span className="font-medium text-gray-800 italic text-sm">{booking.status}</span>
                     </div>
                     <div className="flex items-center gap-1">
                       {[...Array(5)].map((_, i) => (
                         <Star 
                           key={i} 
-                          className={`w-4 h-4 transition-colors duration-200 ${i < booking.rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`} 
+                          className={`w-3 h-3 transition-colors duration-200 ${i < booking.rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`} 
                         />
                       ))}
                     </div>

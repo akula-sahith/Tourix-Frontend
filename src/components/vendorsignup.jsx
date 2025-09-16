@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, X, Mail, Lock, User, Github, Apple } from 'lucide-react';
-import { 
-  createUserWithEmailAndPassword, 
-  signInWithEmailAndPassword, 
-  signInWithPopup 
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signInWithPopup
 } from "firebase/auth";
-import { auth, googleProvider, githubProvider } from "../firebase"; 
+import { auth, googleProvider, githubProvider } from "../firebase";
 
 const VendorAuth = ({ isOpen = true, onClose = () => {} }) => {
+  const navigate = useNavigate(); // Initialize useNavigate hook
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -32,7 +35,6 @@ const VendorAuth = ({ isOpen = true, onClose = () => {} }) => {
       setIsVisible(false);
       document.body.style.overflow = 'unset';
     }
-
     return () => {
       document.body.style.overflow = 'unset';
     };
@@ -44,7 +46,6 @@ const VendorAuth = ({ isOpen = true, onClose = () => {} }) => {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
-    
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
@@ -52,13 +53,11 @@ const VendorAuth = ({ isOpen = true, onClose = () => {} }) => {
 
   const validateForm = () => {
     const newErrors = {};
-    
     if (!formData.email.trim()) {
       newErrors.email = 'Email is required';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = 'Please enter a valid email address';
     }
-    
     if (!formData.password.trim()) {
       newErrors.password = 'Password is required';
     } else if (!isLoginView && formData.password.length < 8) {
@@ -66,7 +65,6 @@ const VendorAuth = ({ isOpen = true, onClose = () => {} }) => {
     } else if (!isLoginView && !/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(formData.password)) {
       newErrors.password = 'Password must contain uppercase, lowercase, and number';
     }
-
     if (!isLoginView) {
       if (!formData.firstName.trim()) {
         newErrors.firstName = 'First name is required';
@@ -83,59 +81,56 @@ const VendorAuth = ({ isOpen = true, onClose = () => {} }) => {
         newErrors.agreeTerms = 'You must agree to the terms and conditions';
       }
     }
-    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleAuth = async () => {
-  if (!validateForm()) return;
-  setIsLoading(true);
-  setErrors({});
-
-  try {
-    if (isLoginView) {
-      // 🔹 Sign in existing vendor
-      const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
-      console.log("Vendor Login successful!", userCredential.user);
-      alert("Vendor signed in successfully!");
-      onClose();
-    } else {
-      // 🔹 Sign up new vendor
-      const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
-      console.log("Vendor Signup successful!", userCredential.user);
-      alert("Vendor account created successfully! Please check your email for verification.");
-      setIsLoginView(true);
+    if (!validateForm()) return;
+    setIsLoading(true);
+    setErrors({});
+    try {
+      if (isLoginView) {
+        // 🔹 Sign in existing vendor
+        const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
+        console.log("Vendor Login successful!", userCredential.user);
+        alert("Vendor signed in successfully!");
+        onClose();
+        navigate('/vendorhome'); // Navigate to /vendorhome on successful sign-in
+      } else {
+        // 🔹 Sign up new vendor
+        const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+        console.log("Vendor Signup successful!", userCredential.user);
+        alert("Vendor account created successfully! Please check your email for verification.");
+        setIsLoginView(true);
+      }
+    } catch (error) {
+      console.error("Vendor authentication error:", error);
+      setErrors({ general: error.message });
+    } finally {
+      setIsLoading(false);
     }
-  } catch (error) {
-    console.error("Vendor authentication error:", error);
-    setErrors({ general: error.message });
-  } finally {
-    setIsLoading(false);
-  }
-};
-
+  };
 
   const handleSocialAuth = async (provider) => {
-  setIsLoading(true);
-  setErrors({});
-  try {
-    let selectedProvider;
-    if (provider === "Google") selectedProvider = googleProvider;
-    if (provider === "GitHub") selectedProvider = githubProvider;
-
-    const result = await signInWithPopup(auth, selectedProvider);
-    console.log(`${provider} authentication completed`, result.user);
-    alert(`Successfully signed in with ${provider}!`);
-    onClose();
-  } catch (error) {
-    console.error(`${provider} authentication error:`, error);
-    setErrors({ general: error.message });
-  } finally {
-    setIsLoading(false);
-  }
-};
-
+    setIsLoading(true);
+    setErrors({});
+    try {
+      let selectedProvider;
+      if (provider === "Google") selectedProvider = googleProvider;
+      if (provider === "GitHub") selectedProvider = githubProvider;
+      const result = await signInWithPopup(auth, selectedProvider);
+      console.log(`${provider} authentication completed`, result.user);
+      alert(`Successfully signed in with ${provider}!`);
+      onClose();
+      navigate('/vendorhome'); // Navigate to /vendorhome on successful social sign-in
+    } catch (error) {
+      console.error(`${provider} authentication error:`, error);
+      setErrors({ general: error.message });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleTermsClick = (type) => {
     const messages = {
@@ -144,7 +139,7 @@ const VendorAuth = ({ isOpen = true, onClose = () => {} }) => {
     };
     alert(messages[type]);
   };
-  
+
   const handleViewToggle = () => {
     if (!isTransitioning) {
       setIsTransitioning(true);

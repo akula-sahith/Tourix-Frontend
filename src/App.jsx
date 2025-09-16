@@ -5,7 +5,8 @@ import MainAuth from "./components/mainauth.jsx";
 import TravelSignup from "./components/travelsignup.jsx";
 import VendorSignup from "./components/vendorsignup.jsx";
 import AdminSignup from "./components/adminsignup.jsx";
-import TouristDashboard from "./components/touristDashboard.jsx"
+import TouristDashboard from "./components/touristDashboard.jsx";
+import Tripplanner from "./components/Aitripplanner.jsx";
 // You can create a combined component for the home page if needed.
 const HomePage = () => (
   <>
@@ -24,6 +25,9 @@ function App() {
           <Route path="/vendorsp" element={<VendorSignup />}/>
           <Route path="/adminsp" element={<AdminSignup />}/>
           <Route path='/touristDashboard' element={<TouristDashboard/>}/>
+          <Route path='/trip'  element={<Tripplanner />}/>
+          
+
         </Routes>
       </div>
     </Router>
