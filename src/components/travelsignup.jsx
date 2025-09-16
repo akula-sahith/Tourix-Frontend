@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Eye, EyeOff, X, Mail, Lock, User, Github, Apple } from 'lucide-react';
-
+import { 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword, 
+  signInWithPopup 
+} from "firebase/auth";
+import { auth, googleProvider, githubProvider } from "../firebase"; 
 const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
   const [formData, setFormData] = useState({
     firstName: '',
@@ -82,50 +87,54 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleAuth = async () => {
-    if (!validateForm()) return;
-    
-    setIsLoading(true);
-    setErrors({});
+ const handleAuth = async () => {
+  if (!validateForm()) return;
+  setIsLoading(true);
+  setErrors({});
 
-    try {
-      if (isLoginView) {
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        console.log('Login successful!', { email: formData.email });
-        alert('Signed in successfully!');
-        onClose();
-      } else {
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        console.log('Signup successful!', { firstName: formData.firstName, email: formData.email });
-        alert('Account created successfully! Please check your email for verification.');
-        setIsLoginView(true);
-      }
-    } catch (error) {
-      console.error('Authentication error:', error);
-      setErrors({ general: 'An error occurred. Please try again.' });
-    } finally {
-      setIsLoading(false);
+  try {
+    if (isLoginView) {
+      // 🔹 Sign in existing vendor
+      const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
+      console.log("Vendor Login successful!", userCredential.user);
+      alert("Vendor signed in successfully!");
+      onClose();
+    } else {
+      // 🔹 Sign up new vendor
+      const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+      console.log("Tourist Signup successful!", userCredential.user);
+      alert("Tourist account created successfully! Please check your email for verification.");
+      setIsLoginView(true);
     }
-  };
+  } catch (error) {
+    console.error("Vendor authentication error:", error);
+    setErrors({ general: error.message });
+  } finally {
+    setIsLoading(false);
+  }
+};
+
+
 
   const handleSocialAuth = async (provider) => {
-    setIsLoading(true);
-    setErrors({});
-    
-    try {
-      console.log(`Initiating ${provider} OAuth...`);
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      console.log(`${provider} authentication completed successfully`);
-      alert(`Successfully signed in with ${provider}!`);
-      onClose();
-    } catch (error) {
-      console.error(`${provider} authentication error:`, error);
-      setErrors({ general: `${provider} authentication failed. Please try again.` });
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  setIsLoading(true);
+  setErrors({});
+  try {
+    let selectedProvider;
+    if (provider === "Google") selectedProvider = googleProvider;
+    if (provider === "GitHub") selectedProvider = githubProvider;
 
+    const result = await signInWithPopup(auth, selectedProvider);
+    console.log(`${provider} authentication completed`, result.user);
+    alert(`Successfully signed in with ${provider}!`);
+    onClose();
+  } catch (error) {
+    console.error(`${provider} authentication error:`, error);
+    setErrors({ general: error.message });
+  } finally {
+    setIsLoading(false);
+  }
+};
   const handleTermsClick = (type) => {
     const messages = {
       terms: 'Terms and Conditions:\n\n1. User Agreement\n2. Service Usage\n3. Privacy Rights\n4. Account Responsibilities',

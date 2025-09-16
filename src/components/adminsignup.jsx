@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Eye, EyeOff, X, Mail, Lock, User, Github, Apple } from 'lucide-react';
-
+import { auth } from "../firebase";  // import firebase
+import { 
+  createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword,
+  sendEmailVerification 
+} from "firebase/auth";
 const AdminAuth = ({ isOpen = true, onClose = () => {} }) => {
   const [formData, setFormData] = useState({
     firstName: '',
@@ -82,27 +87,43 @@ const AdminAuth = ({ isOpen = true, onClose = () => {} }) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleAuth = async () => {
+ const handleAuth = async () => {
     if (!validateForm()) return;
-    
+
     setIsLoading(true);
     setErrors({});
 
     try {
       if (isLoginView) {
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        console.log('Admin Login successful!', { email: formData.email });
-        alert('Admin signed in successfully!');
+        // 🔹 Firebase Login
+        const userCredential = await signInWithEmailAndPassword(
+          auth,
+          formData.email,
+          formData.password
+        );
+        const user = userCredential.user;
+        console.log("Admin Login successful!", user);
+        alert(`Welcome back ${user.email}`);
         onClose();
       } else {
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        console.log('Admin Signup successful!', { firstName: formData.firstName, email: formData.email });
-        alert('Admin account created successfully! Please check your email for verification.');
+        // 🔹 Firebase Signup
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          formData.email,
+          formData.password
+        );
+        const user = userCredential.user;
+
+        // Send verification email
+        await sendEmailVerification(user);
+
+        console.log("Admin Signup successful!", user);
+        alert("Admin account created successfully! Please check your email for verification.");
         setIsLoginView(true);
       }
     } catch (error) {
-      console.error('Admin authentication error:', error);
-      setErrors({ general: 'An error occurred. Please try again.' });
+      console.error("Admin authentication error:", error);
+      setErrors({ general: error.message });
     } finally {
       setIsLoading(false);
     }
