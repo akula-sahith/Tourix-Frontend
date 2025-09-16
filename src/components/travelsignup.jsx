@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { Eye, EyeOff, X, Mail, Lock, User, Github, Apple } from 'lucide-react';
 import { 
   createUserWithEmailAndPassword, 
@@ -6,7 +7,9 @@ import {
   signInWithPopup 
 } from "firebase/auth";
 import { auth, googleProvider, githubProvider } from "../firebase"; 
+
 const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
+  const navigate = useNavigate(); // Initialize the hook here
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -21,7 +24,7 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
   const [errors, setErrors] = useState({});
   const [isVisible, setIsVisible] = useState(false);
   const [isLoginView, setIsLoginView] = useState(true);
-  const [isTransitioning, setIsTransitioning] = useState(false); // New state for animation
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
@@ -87,54 +90,51 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
     return Object.keys(newErrors).length === 0;
   };
 
- const handleAuth = async () => {
-  if (!validateForm()) return;
-  setIsLoading(true);
-  setErrors({});
+  const handleAuth = async () => {
+    if (!validateForm()) return;
+    setIsLoading(true);
+    setErrors({});
 
-  try {
-    if (isLoginView) {
-      // 🔹 Sign in existing vendor
-      const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
-      console.log("Vendor Login successful!", userCredential.user);
-      alert("Vendor signed in successfully!");
-      onClose();
-    } else {
-      // 🔹 Sign up new vendor
-      const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
-      console.log("Tourist Signup successful!", userCredential.user);
-      alert("Tourist account created successfully! Please check your email for verification.");
-      setIsLoginView(true);
+    try {
+      if (isLoginView) {
+        await signInWithEmailAndPassword(auth, formData.email, formData.password);
+        console.log("User signed in successfully!");
+        onClose();
+        navigate('/touristDashboard'); // Navigate to the dashboard
+      } else {
+        await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+        console.log("User account created successfully!");
+        onClose();
+        navigate('/touristDashboard'); // Navigate to the dashboard
+      }
+    } catch (error) {
+      console.error("Authentication error:", error);
+      setErrors({ general: error.message });
+    } finally {
+      setIsLoading(false);
     }
-  } catch (error) {
-    console.error("Vendor authentication error:", error);
-    setErrors({ general: error.message });
-  } finally {
-    setIsLoading(false);
-  }
-};
+  };
 
+  const handleSocialAuth = async (providerName) => {
+    setIsLoading(true);
+    setErrors({});
+    try {
+      let selectedProvider;
+      if (providerName === "Google") selectedProvider = googleProvider;
+      if (providerName === "GitHub") selectedProvider = githubProvider;
 
+      await signInWithPopup(auth, selectedProvider);
+      console.log(`${providerName} authentication completed`);
+      onClose();
+      navigate('/touristDashboard'); // Navigate to the dashboard
+    } catch (error) {
+      console.error(`${providerName} authentication error:`, error);
+      setErrors({ general: error.message });
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-  const handleSocialAuth = async (provider) => {
-  setIsLoading(true);
-  setErrors({});
-  try {
-    let selectedProvider;
-    if (provider === "Google") selectedProvider = googleProvider;
-    if (provider === "GitHub") selectedProvider = githubProvider;
-
-    const result = await signInWithPopup(auth, selectedProvider);
-    console.log(`${provider} authentication completed`, result.user);
-    alert(`Successfully signed in with ${provider}!`);
-    onClose();
-  } catch (error) {
-    console.error(`${provider} authentication error:`, error);
-    setErrors({ general: error.message });
-  } finally {
-    setIsLoading(false);
-  }
-};
   const handleTermsClick = (type) => {
     const messages = {
       terms: 'Terms and Conditions:\n\n1. User Agreement\n2. Service Usage\n3. Privacy Rights\n4. Account Responsibilities',
@@ -149,7 +149,7 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
       setTimeout(() => {
         setIsLoginView(!isLoginView);
         setIsTransitioning(false);
-      }, 300); // Duration of the animation
+      }, 300); 
     }
   };
 
@@ -209,7 +209,7 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
             </div>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-emerald-600 transition-colors p-2 rounded-full hover:bg-emerald-50"
+              className="text-gray-400 hover:text-emerald-600 transition-colors p-2 rounded-full hover:bg-emerald-50 cursor-pointer"
               aria-label="Close form"
             >
               <X className="w-5 h-5" />
@@ -273,7 +273,7 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-emerald-600 transition-colors"
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-emerald-600 transition-colors cursor-pointer"
                         aria-label={showPassword ? 'Hide password' : 'Show password'}
                         disabled={isLoading}
                       >
@@ -302,7 +302,7 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
                   <div className="text-center pt-2">
                     <button
                       type="button"
-                      className="text-sm text-emerald-600 hover:text-emerald-800 transition-colors"
+                      className="text-sm text-emerald-600 hover:text-emerald-800 transition-colors cursor-pointer"
                       disabled={isLoading}
                     >
                       Forgot Password?
@@ -407,7 +407,7 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
                         <button
                           type="button"
                           onClick={() => setShowPassword(!showPassword)}
-                          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-emerald-600 transition-colors"
+                          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-emerald-600 transition-colors cursor-pointer"
                           aria-label={showPassword ? 'Hide password' : 'Show password'}
                           disabled={isLoading}
                         >
@@ -439,7 +439,7 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
                         <button
                           type="button"
                           onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-emerald-600 transition-colors"
+                          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-emerald-600 transition-colors cursor-pointer"
                           aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
                           disabled={isLoading}
                         >
@@ -458,14 +458,14 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
                         name="agreeTerms"
                         checked={formData.agreeTerms}
                         onChange={handleInputChange}
-                        className="w-4 h-4 text-emerald-600 bg-white border-2 border-emerald-300 rounded focus:ring-emerald-500 focus:ring-2 mt-0.5 transition-colors"
+                        className="w-4 h-4 text-emerald-600 bg-white border-2 border-emerald-300 rounded focus:ring-emerald-500 focus:ring-2 mt-0.5 transition-colors cursor-pointer"
                         disabled={isLoading}
                       />
                       <span className="text-sm text-gray-700 ml-3 leading-relaxed">
                         I agree to the{' '}
                         <button
                           type="button"
-                          className="text-emerald-600 hover:text-emerald-800 underline font-medium transition-colors"
+                          className="text-emerald-600 hover:text-emerald-800 underline font-medium transition-colors cursor-pointer"
                           onClick={() => handleTermsClick('terms')}
                           disabled={isLoading}
                         >
@@ -474,7 +474,7 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
                         {' '}and{' '}
                         <button
                           type="button"
-                          className="text-emerald-600 hover:text-emerald-800 underline font-medium transition-colors"
+                          className="text-emerald-600 hover:text-emerald-800 underline font-medium transition-colors cursor-pointer"
                           onClick={() => handleTermsClick('privacy')}
                           disabled={isLoading}
                         >
@@ -523,7 +523,7 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
             <button
               onClick={() => handleSocialAuth('Google')}
               disabled={isLoading}
-              className="w-full flex items-center justify-center px-4 py-3 bg-white hover:bg-gray-50 text-gray-700 font-medium rounded-lg border border-gray-300 transition-all duration-200 hover:shadow-md hover:border-gray-400 disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
+              className="w-full flex items-center justify-center px-4 py-3 bg-white hover:bg-gray-50 text-gray-700 font-medium rounded-lg border border-gray-300 transition-all duration-200 hover:shadow-md hover:border-gray-400 disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 cursor-pointer"
             >
               <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">
                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -533,24 +533,24 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
               </svg>
               Continue with Google
             </button>
-                        <div className="grid grid-cols-2 gap-3">
-              <button
-                onClick={() => handleSocialAuth('GitHub')}
-                disabled={isLoading}
-                className="flex items-center justify-center px-4 py-3 bg-gray-900 hover:bg-gray-800 text-white font-medium rounded-lg transition-all duration-200 hover:shadow-md disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
-              >
-                <Github className="w-5 h-5 mr-2" />
-                GitHub
-              </button>
-                            <button
-                onClick={() => handleSocialAuth('Apple')}
-                disabled={isLoading}
-                className="flex items-center justify-center px-4 py-3 bg-black hover:bg-gray-800 text-white font-medium rounded-lg transition-all duration-200 hover:shadow-md disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
-              >
-                <Apple className="w-5 h-5 mr-2" />
-                Apple
-              </button>
-            </div>
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  onClick={() => handleSocialAuth('GitHub')}
+                  disabled={isLoading}
+                  className="flex items-center justify-center px-4 py-3 bg-gray-900 hover:bg-gray-800 text-white font-medium rounded-lg transition-all duration-200 hover:shadow-md disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 cursor-pointer"
+                >
+                  <Github className="w-5 h-5 mr-2" />
+                  GitHub
+                </button>
+                <button
+                  onClick={() => handleSocialAuth('Apple')}
+                  disabled={isLoading}
+                  className="flex items-center justify-center px-4 py-3 bg-black hover:bg-gray-800 text-white font-medium rounded-lg transition-all duration-200 hover:shadow-md disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 cursor-pointer"
+                >
+                  <Apple className="w-5 h-5 mr-2" />
+                  Apple
+                </button>
+              </div>
           </div>
           
           {/* Toggle between Sign In and Sign Up */}
@@ -560,7 +560,7 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
                 Don't have an account?{' '}
                 <button
                   onClick={handleViewToggle}
-                  className="text-emerald-600 hover:text-emerald-800 font-semibold transition-colors underline"
+                  className="text-emerald-600 hover:text-emerald-800 font-semibold transition-colors underline cursor-pointer"
                   disabled={isLoading}
                 >
                   Create an Account
@@ -571,7 +571,7 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
                 Already have an account?{' '}
                 <button
                   onClick={handleViewToggle}
-                  className="text-emerald-600 hover:text-emerald-800 font-semibold transition-colors underline"
+                  className="text-emerald-600 hover:text-emerald-800 font-semibold transition-colors underline cursor-pointer"
                   disabled={isLoading}
                 >
                   Sign In
