@@ -118,16 +118,10 @@ const AuthenticationPage = () => {
                 onMouseEnter={(e) => e.target.style.backgroundColor = roles[0].hoverColor}
                 onMouseLeave={(e) => e.target.style.backgroundColor = roles[0].color}
               >
-                Login
+                Login as Tourist
               </button>
               
-              <div className="space-y-1">
-                <p className="text-gray-600 text-sm">Don't have an account?</p>
-                <button className="font-medium hover:underline transition-all duration-200 text-sm"
-                        style={{ color: roles[0].color }}>
-                  Sign Up.
-                </button>
-              </div>
+              
             </div>
 
             {/* Tourist Icon */}
@@ -182,7 +176,7 @@ const AuthenticationPage = () => {
                 onMouseEnter={(e) => e.target.style.backgroundColor = roles[1].hoverColor}
                 onMouseLeave={(e) => e.target.style.backgroundColor = roles[1].color}
               >
-                Login
+                Join as Vendor
               </button>
               
               
@@ -240,7 +234,7 @@ const AuthenticationPage = () => {
                 onMouseEnter={(e) => e.target.style.backgroundColor = roles[2].hoverColor}
                 onMouseLeave={(e) => e.target.style.backgroundColor = roles[2].color}
               >
-                Join as Vendor
+                Login  as Admin
               </button>
               
             
