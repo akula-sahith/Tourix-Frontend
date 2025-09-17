@@ -12,6 +12,7 @@ import TransportLayout from "./components/local/transport/Layout";
 import GuideLayout from "./components/local/guide/Layout";
 import HandicraftLayout from "./components/local/handicraft/Layout";
 import HomestayLayout from "./components/local/homestay/Layout";
+import VendorTypeSelection from "./components/forms/vendorOptions.jsx";
 
 // Import all dashboard pages
 import TransportDashboard from "./components/local/transport/pages/Dashboard";
@@ -63,6 +64,7 @@ function App() {
           <Route path='/touristDashboard' element={<TouristDashboard/>}/>
           <Route path='/trip'  element={<Tripplanner />}/>
           <Route path='/services' element={<Services />} />
+          <Route path="/chooseType" element={<VendorTypeSelection/>}/>
 
           <Route path="/vendorhome" element={<MainSelection />} />
         <Route path="/transport" element={<TransportLayout />}>

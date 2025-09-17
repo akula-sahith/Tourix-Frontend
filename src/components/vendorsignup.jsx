@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Eye, EyeOff, X, Mail, Lock, User, Github, Apple } from 'lucide-react';
+import { Eye, EyeOff, X, Mail, Lock, User, Github, Apple, Phone, MapPin } from 'lucide-react';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -17,6 +17,8 @@ const VendorAuth = ({ isOpen = true, onClose = () => {} }) => {
     email: '',
     password: '',
     confirmPassword: '',
+    mobileNumber: '',
+    location: '',
     agreeTerms: false
   });
   const [showPassword, setShowPassword] = useState(false);
@@ -72,6 +74,14 @@ const VendorAuth = ({ isOpen = true, onClose = () => {} }) => {
       if (!formData.lastName.trim()) {
         newErrors.lastName = 'Last name is required';
       }
+      if (!formData.mobileNumber.trim()) {
+        newErrors.mobileNumber = 'Mobile number is required';
+      } else if (!/^[6-9]\d{9}$/.test(formData.mobileNumber)) {
+        newErrors.mobileNumber = 'Please enter a valid 10-digit mobile number';
+      }
+      if (!formData.location.trim()) {
+        newErrors.location = 'Location is required';
+      }
       if (!formData.confirmPassword.trim()) {
         newErrors.confirmPassword = 'Please confirm your password';
       } else if (formData.password !== formData.confirmPassword) {
@@ -85,6 +95,36 @@ const VendorAuth = ({ isOpen = true, onClose = () => {} }) => {
     return Object.keys(newErrors).length === 0;
   };
 
+  const submitToBackend = async (userData) => {
+    try {
+      const response = await fetch('http://localhost:5000/vendor/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: `${userData.firstName} ${userData.lastName}`,
+          email: userData.email,
+          phone: userData.mobileNumber,
+          destination: userData.location,
+          uid: userData.uid,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Backend registration failed');
+      }
+
+      const result = await response.json();
+      console.log('Backend registration successful:', result);
+      return result;
+    } catch (error) {
+      console.error('Backend registration error:', error);
+      throw error;
+    }
+  };
+
   const handleAuth = async () => {
     if (!validateForm()) return;
     setIsLoading(true);
@@ -93,6 +133,7 @@ const VendorAuth = ({ isOpen = true, onClose = () => {} }) => {
       if (isLoginView) {
         // 🔹 Sign in existing vendor
         const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
+        const uid = userCredential.user.uid; 
         console.log("Vendor Login successful!", userCredential.user);
         alert("Vendor signed in successfully!");
         onClose();
@@ -101,6 +142,17 @@ const VendorAuth = ({ isOpen = true, onClose = () => {} }) => {
         // 🔹 Sign up new vendor
         const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
         console.log("Vendor Signup successful!", userCredential.user);
+        const uid = userCredential.user.uid; 
+        // Submit data to backend
+        await submitToBackend({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          mobileNumber: formData.mobileNumber,
+          location: formData.location,
+          uid: userCredential.user.uid
+        });
+        
         alert("Vendor account created successfully! Please check your email for verification.");
         setIsLoginView(true);
       }
@@ -123,7 +175,6 @@ const VendorAuth = ({ isOpen = true, onClose = () => {} }) => {
       console.log(`${provider} authentication completed`, result.user);
       alert(`Successfully signed in with ${provider}!`);
       onClose();
-      navigate('/vendorhome'); // Navigate to /vendorhome on successful social sign-in
     } catch (error) {
       console.error(`${provider} authentication error:`, error);
       setErrors({ general: error.message });
@@ -248,6 +299,24 @@ const VendorAuth = ({ isOpen = true, onClose = () => {} }) => {
                       <input type="email" id="email" name="email" value={formData.email} onChange={handleInputChange} placeholder="Enter your email" className={`w-full bg-amber-50 border rounded-lg px-10 py-3 text-amber-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all ${errors.email ? 'border-red-500 bg-red-50' : 'border-amber-200'}`} disabled={isLoading} />
                     </div>
                     {errors.email && (<p className="text-red-600 text-sm mt-1" role="alert">{errors.email}</p>)}
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label htmlFor="mobileNumber" className="block text-sm font-medium text-amber-700 mb-2">Mobile Number *</label>
+                      <div className="relative">
+                        <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                        <input type="tel" id="mobileNumber" name="mobileNumber" value={formData.mobileNumber} onChange={handleInputChange} placeholder="Enter mobile number" className={`w-full bg-amber-50 border rounded-lg px-10 py-3 text-amber-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all ${errors.mobileNumber ? 'border-red-500 bg-red-50' : 'border-amber-200'}`} disabled={isLoading} />
+                      </div>
+                      {errors.mobileNumber && (<p className="text-red-600 text-sm mt-1" role="alert">{errors.mobileNumber}</p>)}
+                    </div>
+                    <div>
+                      <label htmlFor="location" className="block text-sm font-medium text-amber-700 mb-2">Location *</label>
+                      <div className="relative">
+                        <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                        <input type="text" id="location" name="location" value={formData.location} onChange={handleInputChange} placeholder="Enter your location" className={`w-full bg-amber-50 border rounded-lg px-10 py-3 text-amber-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 transition-all ${errors.location ? 'border-red-500 bg-red-50' : 'border-amber-200'}`} disabled={isLoading} />
+                      </div>
+                      {errors.location && (<p className="text-red-600 text-sm mt-1" role="alert">{errors.location}</p>)}
+                    </div>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
