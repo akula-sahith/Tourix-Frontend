@@ -16,14 +16,14 @@ const JharkhandGallery = () => {
 
   const imageData = {
     'Industry & Economy': [
-      { src: 'https://picsum.photos/1080/720?random=1', alt: 'Industry 1' },
-      { src: 'https://picsum.photos/1080/720?random=2', alt: 'Industry 2' },
-      { src: 'https://picsum.photos/1080/720?random=3', alt: 'Industry 3' },
-      { src: 'https://picsum.photos/1080/720?random=4', alt: 'Industry 4' },
-      { src: 'https://picsum.photos/1080/720?random=5', alt: 'Industry 5' },
-      { src: 'https://picsum.photos/1080/720?random=6', alt: 'Industry 6' },
-      { src: 'https://picsum.photos/1080/720?random=7', alt: 'Industry 7' },
-      { src: 'https://picsum.photos/1080/720?random=8', alt: 'Industry 8' }
+      { src: 'src/assets/Industry/industry1.jpg', alt: 'Industry 1' },
+      { src: 'src/assets/Industry/industry2.jpg', alt: 'Industry 2' },
+      { src: 'src/assets/Industry/industry3.jpg', alt: 'Industry 3' },
+      { src: 'src/assets/Industry/industry4.jpg', alt: 'Industry 4' },
+      { src: 'src/assets/Industry/industry5.jpg', alt: 'Industry 5' },
+      { src: 'src/assets/Industry/industry6.jpg', alt: 'Industry 6' },
+      { src: 'src/assets/Industry/industry7.jpg', alt: 'Industry 7' },
+      { src: 'src/assets/Industry/industry8.webp', alt: 'Industry 8' }
     ],
     'Government & Administration': [
       { src: 'https://picsum.photos/1080/720?random=11', alt: 'Government 1' },
@@ -66,14 +66,14 @@ const JharkhandGallery = () => {
       { src: 'https://picsum.photos/1080/720?random=48', alt: 'Lifestyle 8' }
     ],
     'Cuisine & Handicrafts': [
-      { src: 'src/assets/cusine1.webp', alt: 'Cuisine 1' },
-      { src: 'src/assets/cusine2.webp', alt: 'Cuisine 2' },
-      { src: 'src/assets/cusine3.webp', alt: 'Cuisine 3' },
-      { src: 'src/assets/cusine4.webp', alt: 'Cuisine 4' },
-      { src: 'src/assets/cusine5.jpg', alt: 'Cuisine 5' },
-      { src: 'src/assets/cusine6.jpg', alt: 'Cuisine 6' },
-      { src: 'src/assets/cusine7.webp', alt: 'Cuisine 7' },
-      { src: 'src/assets/cusine8.JPG', alt: 'Cuisine 8' },
+      { src: 'src/assets/cusine/cusine1.webp', alt: 'Cuisine 1' },
+      { src: 'src/assets/cusine/cusine2.webp', alt: 'Cuisine 2' },
+      { src: 'src/assets/cusine/cusine3.webp', alt: 'Cuisine 3' },
+      { src: 'src/assets/cusine/cusine4.webp', alt: 'Cuisine 4' },
+      { src: 'src/assets/cusine/cusine5.jpg', alt: 'Cuisine 5' },
+      { src: 'src/assets/cusine/cusine6.jpg', alt: 'Cuisine 6' },
+      { src: 'src/assets/cusine/cusine7.webp', alt: 'Cuisine 7' },
+      { src: 'src/assets/cusine/cusine8.JPG', alt: 'Cuisine 8' },
     ]
   };
 
@@ -130,10 +130,10 @@ const JharkhandGallery = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Rainbow Gradient Title */}
         <div className="text-center mb-12">
-          <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-red-500 via-yellow-500 via-green-500 via-blue-500 via-indigo-500 to-purple-500 bg-clip-text text-transparent animate-pulse cursor-default">
+          <h2 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-red-500 via-yellow-500 to-purple-500 bg-clip-text text-transparent animate-pulse cursor-default">
             Explore Jharkhand
           </h2>
-          <div className="mt-2 h-1 w-32 mx-auto bg-gradient-to-r from-red-500 via-yellow-500 via-green-500 via-blue-500 via-indigo-500 to-purple-500 rounded-full animate-pulse"></div>
+          <div className="mt-2 h-1 w-32 mx-auto bg-gradient-to-r from-red-500 via-yellow-500 to-purple-500 rounded-full animate-pulse"></div>
         </div>
 
         {/* Navigation Bar */}
