@@ -198,7 +198,7 @@ const JharkhandDashboard = () => {
       title: "AI Tour Planner",
       description: "Intelligent itinerary generation with personalized recommendations",
       icon: Bot,
-      route: "/trip", // Corrected route path to match App.jsx
+      route: "/trip",
       gradient: "from-blue-500 to-indigo-600",
     },
     {
@@ -206,7 +206,7 @@ const JharkhandDashboard = () => {
       title: "Services Marketplace",
       description: "Connect with verified guides, homestays, and cultural events",
       icon: Headphones,
-      route: "/services",
+      route: "/services", // This is the correct route
       gradient: "from-emerald-500 to-green-600",
     },
     {
@@ -229,7 +229,7 @@ const JharkhandDashboard = () => {
 
   const handleNavigation = (route) => {
     console.log(`Navigating to: ${route}`);
-    navigate(route); // Use the navigate function
+    navigate(route); // This will correctly handle the '/services' route
   };
 
   const handleLogout = () => {
