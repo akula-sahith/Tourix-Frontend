@@ -3,6 +3,7 @@ import AboutJharkhand from "./aboutjharkhand.jsx";
 import Gallery from "./gallery.jsx";
 import Contact from "./contact.jsx";
 import Footer from "./footer.jsx";
+import { Link } from "react-router-dom";
 
 const JharkhandTourismHero = () => {
   const aboutRef = useRef(null);
@@ -160,14 +161,26 @@ const JharkhandTourismHero = () => {
                 </p>
 
                 {/* CTA Buttons */}
-                <div className="flex flex-col sm:flex-row gap-4">
-                  <button className="px-8 py-4 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-lg rounded-full transition-all duration-300 transform hover:scale-105 shadow-xl cursor-pointer"> 
-                    Start selling
-                  </button>
-                  <button className="px-8 py-4 border-2 border-white/80 hover:border-white text-white hover:bg-white hover:text-gray-900 font-semibold text-lg rounded-full transition-all duration-300 backdrop-blur-sm cursor-pointer"> 
-                    Plan Your Trip
-                  </button>
-                </div>
+                
+
+<div className="flex flex-col sm:flex-row gap-4">
+  {/* Start Selling Button */}
+  <Link
+    to="/vendorsp"
+    className="px-8 py-4 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-lg rounded-full transition-all duration-300 transform hover:scale-105 shadow-xl cursor-pointer flex items-center justify-center"
+  >
+    Start Selling
+  </Link>
+
+  {/* Plan Your Trip Button */}
+  <Link
+    to="/travelsp"
+    className="px-8 py-4 border-2 border-white/80 hover:border-white text-white hover:bg-white hover:text-gray-900 font-semibold text-lg rounded-full transition-all duration-300 backdrop-blur-sm cursor-pointer flex items-center justify-center"
+  >
+    Plan Your Trip
+  </Link>
+</div>
+
               </div>
             </div>
           </div>

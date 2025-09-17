@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, X, Mail, Lock, User, Github, Apple } from 'lucide-react';
-import { 
-  createUserWithEmailAndPassword, 
-  signInWithEmailAndPassword, 
-  signInWithPopup 
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signInWithPopup
 } from "firebase/auth";
-import { auth, googleProvider, githubProvider } from "../firebase"; 
+import { auth, googleProvider, githubProvider } from "../firebase";
 
 const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
-  const navigate = useNavigate(); // Initialize the hook here
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -34,7 +34,6 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
       setIsVisible(false);
       document.body.style.overflow = 'unset';
     }
-
     return () => {
       document.body.style.overflow = 'unset';
     };
@@ -46,7 +45,6 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));
-    
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
@@ -54,13 +52,11 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
 
   const validateForm = () => {
     const newErrors = {};
-    
     if (!formData.email.trim()) {
       newErrors.email = 'Email is required';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = 'Please enter a valid email address';
     }
-    
     if (!formData.password.trim()) {
       newErrors.password = 'Password is required';
     } else if (!isLoginView && formData.password.length < 8) {
@@ -68,7 +64,6 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
     } else if (!isLoginView && !/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(formData.password)) {
       newErrors.password = 'Password must contain uppercase, lowercase, and number';
     }
-
     if (!isLoginView) {
       if (!formData.firstName.trim()) {
         newErrors.firstName = 'First name is required';
@@ -85,7 +80,6 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
         newErrors.agreeTerms = 'You must agree to the terms and conditions';
       }
     }
-    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -94,18 +88,17 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
     if (!validateForm()) return;
     setIsLoading(true);
     setErrors({});
-
     try {
       if (isLoginView) {
         await signInWithEmailAndPassword(auth, formData.email, formData.password);
         console.log("User signed in successfully!");
         onClose();
-        navigate('/touristDashboard'); // Navigate to the dashboard
+        navigate('/touristDashboard');
       } else {
         await createUserWithEmailAndPassword(auth, formData.email, formData.password);
         console.log("User account created successfully!");
         onClose();
-        navigate('/touristDashboard'); // Navigate to the dashboard
+        navigate('/touristDashboard');
       }
     } catch (error) {
       console.error("Authentication error:", error);
@@ -126,7 +119,7 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
       await signInWithPopup(auth, selectedProvider);
       console.log(`${providerName} authentication completed`);
       onClose();
-      navigate('/touristDashboard'); // Navigate to the dashboard
+      navigate('/touristDashboard');
     } catch (error) {
       console.error(`${providerName} authentication error:`, error);
       setErrors({ general: error.message });
@@ -149,7 +142,7 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
       setTimeout(() => {
         setIsLoginView(!isLoginView);
         setIsTransitioning(false);
-      }, 300); 
+      }, 300);
     }
   };
 
@@ -191,25 +184,29 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
         }
       `}</style>
 
-      <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-        <div 
+      <div
+        className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4 cursor-pointer"
+        onClick={() => navigate('/mainauth')}
+      >
+        <div
           className={`bg-white rounded-2xl shadow-2xl p-6 w-full max-w-[500px] max-h-[90vh] overflow-y-auto transform transition-all duration-300 ${
             isVisible ? 'scale-100 opacity-100 fade-in-scale' : 'scale-90 opacity-0'
           }`}
+          onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 className="text-2xl font-bold text-emerald-600">
+              <h2 className="text-2xl font-bold text-gray-800">
                 {isLoginView ? 'Sign In to Your Account' : 'Create Your Account'}
               </h2>
-              <p className="text-gray-600 text-sm mt-1">
+              <p className="text-gray-500 text-sm mt-1">
                 {isLoginView ? 'Welcome back! Please sign in to continue your journey.' : 'Join our travel community today!'}
               </p>
             </div>
             <button
-              onClick={onClose}
-              className="text-gray-400 hover:text-emerald-600 transition-colors p-2 rounded-full hover:bg-emerald-50 cursor-pointer"
+              onClick={() => navigate('/mainauth')}
+              className="text-gray-400 hover:text-red-500 transition-colors p-2 rounded-full hover:bg-red-50 cursor-pointer"
               aria-label="Close form"
             >
               <X className="w-5 h-5" />
@@ -230,7 +227,7 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
               <>
                 <div className="space-y-4">
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-emerald-700 mb-2">
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                       Email Address *
                     </label>
                     <div className="relative">
@@ -242,8 +239,8 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
                         value={formData.email}
                         onChange={handleInputChange}
                         placeholder="Enter your email"
-                        className={`w-full bg-emerald-50 border rounded-lg px-10 py-3 text-emerald-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all ${
-                          errors.email ? 'border-red-500 bg-red-50' : 'border-emerald-200'
+                        className={`w-full bg-green-50 border rounded-lg px-10 py-3 text-green-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 transition-all ${
+                          errors.email ? 'border-red-500 bg-red-50' : 'border-green-200'
                         }`}
                         disabled={isLoading}
                       />
@@ -253,7 +250,7 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
                     )}
                   </div>
                   <div>
-                    <label htmlFor="password" className="block text-sm font-medium text-emerald-700 mb-2">
+                    <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
                       Password *
                     </label>
                     <div className="relative">
@@ -265,15 +262,15 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
                         value={formData.password}
                         onChange={handleInputChange}
                         placeholder="Enter your password"
-                        className={`w-full bg-emerald-50 border rounded-lg px-10 py-3 pr-12 text-emerald-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all ${
-                          errors.password ? 'border-red-500 bg-red-50' : 'border-emerald-200'
+                        className={`w-full bg-green-50 border rounded-lg px-10 py-3 pr-12 text-green-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 transition-all ${
+                          errors.password ? 'border-red-500 bg-red-50' : 'border-green-200'
                         }`}
                         disabled={isLoading}
                       />
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-emerald-600 transition-colors cursor-pointer"
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-green-600 transition-colors cursor-pointer"
                         aria-label={showPassword ? 'Hide password' : 'Show password'}
                         disabled={isLoading}
                       >
@@ -288,7 +285,7 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
                     type="button"
                     onClick={handleAuth}
                     disabled={isLoading}
-                    className="w-full bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:scale-[1.02] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
+                    className="w-full bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:scale-[1.02] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 cursor-pointer"
                   >
                     {isLoading ? (
                       <div className="flex items-center justify-center">
@@ -302,7 +299,7 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
                   <div className="text-center pt-2">
                     <button
                       type="button"
-                      className="text-sm text-emerald-600 hover:text-emerald-800 transition-colors cursor-pointer"
+                      className="text-sm text-green-600 hover:text-green-800 transition-colors cursor-pointer"
                       disabled={isLoading}
                     >
                       Forgot Password?
@@ -316,7 +313,7 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
                 <div className="space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="firstName" className="block text-sm font-medium text-emerald-700 mb-2">
+                      <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-2">
                         First Name *
                       </label>
                       <div className="relative">
@@ -328,8 +325,8 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
                           value={formData.firstName}
                           onChange={handleInputChange}
                           placeholder="Enter first name"
-                          className={`w-full bg-emerald-50 border rounded-lg px-10 py-3 text-emerald-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all ${
-                            errors.firstName ? 'border-red-500 bg-red-50' : 'border-emerald-200'
+                          className={`w-full bg-green-50 border rounded-lg px-10 py-3 text-green-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 transition-all ${
+                            errors.firstName ? 'border-red-500 bg-red-50' : 'border-green-200'
                           }`}
                           disabled={isLoading}
                         />
@@ -339,7 +336,7 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
                       )}
                     </div>
                     <div>
-                      <label htmlFor="lastName" className="block text-sm font-medium text-emerald-700 mb-2">
+                      <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-2">
                         Last Name *
                       </label>
                       <div className="relative">
@@ -351,8 +348,8 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
                           value={formData.lastName}
                           onChange={handleInputChange}
                           placeholder="Enter last name"
-                          className={`w-full bg-emerald-50 border rounded-lg px-10 py-3 text-emerald-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all ${
-                            errors.lastName ? 'border-red-500 bg-red-50' : 'border-emerald-200'
+                          className={`w-full bg-green-50 border rounded-lg px-10 py-3 text-green-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 transition-all ${
+                            errors.lastName ? 'border-red-500 bg-red-50' : 'border-green-200'
                           }`}
                           disabled={isLoading}
                         />
@@ -363,7 +360,7 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
                     </div>
                   </div>
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-emerald-700 mb-2">
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                       Email Address *
                     </label>
                     <div className="relative">
@@ -375,8 +372,8 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
                         value={formData.email}
                         onChange={handleInputChange}
                         placeholder="Enter your email"
-                        className={`w-full bg-emerald-50 border rounded-lg px-10 py-3 text-emerald-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all ${
-                          errors.email ? 'border-red-500 bg-red-50' : 'border-emerald-200'
+                        className={`w-full bg-green-50 border rounded-lg px-10 py-3 text-green-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 transition-all ${
+                          errors.email ? 'border-red-500 bg-red-50' : 'border-green-200'
                         }`}
                         disabled={isLoading}
                       />
@@ -387,7 +384,7 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="password" className="block text-sm font-medium text-emerald-700 mb-2">
+                      <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
                         Password *
                       </label>
                       <div className="relative">
@@ -399,15 +396,15 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
                           value={formData.password}
                           onChange={handleInputChange}
                           placeholder="Create password"
-                          className={`w-full bg-emerald-50 border rounded-lg px-10 py-3 pr-12 text-emerald-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all ${
-                            errors.password ? 'border-red-500 bg-red-50' : 'border-emerald-200'
+                          className={`w-full bg-green-50 border rounded-lg px-10 py-3 pr-12 text-green-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 transition-all ${
+                            errors.password ? 'border-red-500 bg-red-50' : 'border-green-200'
                           }`}
                           disabled={isLoading}
                         />
                         <button
                           type="button"
                           onClick={() => setShowPassword(!showPassword)}
-                          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-emerald-600 transition-colors cursor-pointer"
+                          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-green-600 transition-colors cursor-pointer"
                           aria-label={showPassword ? 'Hide password' : 'Show password'}
                           disabled={isLoading}
                         >
@@ -419,7 +416,7 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
                       )}
                     </div>
                     <div>
-                      <label htmlFor="confirmPassword" className="block text-sm font-medium text-emerald-700 mb-2">
+                      <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
                         Confirm Password *
                       </label>
                       <div className="relative">
@@ -431,15 +428,15 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
                           value={formData.confirmPassword}
                           onChange={handleInputChange}
                           placeholder="Confirm password"
-                          className={`w-full bg-emerald-50 border rounded-lg px-10 py-3 pr-12 text-emerald-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all ${
-                            errors.confirmPassword ? 'border-red-500 bg-red-50' : 'border-emerald-200'
+                          className={`w-full bg-green-50 border rounded-lg px-10 py-3 pr-12 text-green-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-green-500 transition-all ${
+                            errors.confirmPassword ? 'border-red-500 bg-red-50' : 'border-green-200'
                           }`}
                           disabled={isLoading}
                         />
                         <button
                           type="button"
                           onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-emerald-600 transition-colors cursor-pointer"
+                          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-green-600 transition-colors cursor-pointer"
                           aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
                           disabled={isLoading}
                         >
@@ -458,14 +455,14 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
                         name="agreeTerms"
                         checked={formData.agreeTerms}
                         onChange={handleInputChange}
-                        className="w-4 h-4 text-emerald-600 bg-white border-2 border-emerald-300 rounded focus:ring-emerald-500 focus:ring-2 mt-0.5 transition-colors cursor-pointer"
+                        className="w-4 h-4 text-green-600 bg-white border-2 border-gray-300 rounded focus:ring-green-500 focus:ring-2 mt-0.5 transition-colors cursor-pointer"
                         disabled={isLoading}
                       />
                       <span className="text-sm text-gray-700 ml-3 leading-relaxed">
                         I agree to the{' '}
                         <button
                           type="button"
-                          className="text-emerald-600 hover:text-emerald-800 underline font-medium transition-colors cursor-pointer"
+                          className="text-green-600 hover:text-green-800 font-semibold transition-colors underline cursor-pointer"
                           onClick={() => handleTermsClick('terms')}
                           disabled={isLoading}
                         >
@@ -474,7 +471,7 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
                         {' '}and{' '}
                         <button
                           type="button"
-                          className="text-emerald-600 hover:text-emerald-800 underline font-medium transition-colors cursor-pointer"
+                          className="text-green-600 hover:text-green-800 underline font-medium transition-colors cursor-pointer"
                           onClick={() => handleTermsClick('privacy')}
                           disabled={isLoading}
                         >
@@ -490,7 +487,7 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
                     type="button"
                     onClick={handleAuth}
                     disabled={isLoading}
-                    className="w-full bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:scale-[1.02] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
+                    className="w-full bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 hover:shadow-lg hover:scale-[1.02] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 cursor-pointer"
                   >
                     {isLoading ? (
                       <div className="flex items-center justify-center">
@@ -523,7 +520,7 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
             <button
               onClick={() => handleSocialAuth('Google')}
               disabled={isLoading}
-              className="w-full flex items-center justify-center px-4 py-3 bg-white hover:bg-gray-50 text-gray-700 font-medium rounded-lg border border-gray-300 transition-all duration-200 hover:shadow-md hover:border-gray-400 disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 cursor-pointer"
+              className="w-full flex items-center justify-center px-4 py-3 bg-white hover:bg-gray-50 text-gray-700 font-medium rounded-lg border border-gray-300 transition-all duration-200 hover:shadow-md hover:border-gray-400 disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 cursor-pointer"
             >
               <svg className="w-5 h-5 mr-3" viewBox="0 0 24 24">
                 <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
@@ -533,24 +530,24 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
               </svg>
               Continue with Google
             </button>
-              <div className="grid grid-cols-2 gap-3">
-                <button
-                  onClick={() => handleSocialAuth('GitHub')}
-                  disabled={isLoading}
-                  className="flex items-center justify-center px-4 py-3 bg-gray-900 hover:bg-gray-800 text-white font-medium rounded-lg transition-all duration-200 hover:shadow-md disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 cursor-pointer"
-                >
-                  <Github className="w-5 h-5 mr-2" />
-                  GitHub
-                </button>
-                <button
-                  onClick={() => handleSocialAuth('Apple')}
-                  disabled={isLoading}
-                  className="flex items-center justify-center px-4 py-3 bg-black hover:bg-gray-800 text-white font-medium rounded-lg transition-all duration-200 hover:shadow-md disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 cursor-pointer"
-                >
-                  <Apple className="w-5 h-5 mr-2" />
-                  Apple
-                </button>
-              </div>
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                onClick={() => handleSocialAuth('GitHub')}
+                disabled={isLoading}
+                className="flex items-center justify-center px-4 py-3 bg-gray-900 hover:bg-gray-800 text-white font-medium rounded-lg transition-all duration-200 hover:shadow-md disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 cursor-pointer"
+              >
+                <Github className="w-5 h-5 mr-2" />
+                GitHub
+              </button>
+              <button
+                onClick={() => handleSocialAuth('Apple')}
+                disabled={isLoading}
+                className="flex items-center justify-center px-4 py-3 bg-black hover:bg-gray-800 text-white font-medium rounded-lg transition-all duration-200 hover:shadow-md disabled:opacity-60 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 cursor-pointer"
+              >
+                <Apple className="w-5 h-5 mr-2" />
+                Apple
+              </button>
+            </div>
           </div>
           
           {/* Toggle between Sign In and Sign Up */}
@@ -560,7 +557,7 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
                 Don't have an account?{' '}
                 <button
                   onClick={handleViewToggle}
-                  className="text-emerald-600 hover:text-emerald-800 font-semibold transition-colors underline cursor-pointer"
+                  className="text-green-600 hover:text-green-800 font-semibold transition-colors underline cursor-pointer"
                   disabled={isLoading}
                 >
                   Create an Account
@@ -571,7 +568,7 @@ const TravelSignup = ({ isOpen = true, onClose = () => {} }) => {
                 Already have an account?{' '}
                 <button
                   onClick={handleViewToggle}
-                  className="text-emerald-600 hover:text-emerald-800 font-semibold transition-colors underline cursor-pointer"
+                  className="text-green-600 hover:text-green-800 font-semibold transition-colors underline cursor-pointer"
                   disabled={isLoading}
                 >
                   Sign In
