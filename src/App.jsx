@@ -13,7 +13,6 @@ import GuideLayout from "./components/local/guide/Layout";
 import HandicraftLayout from "./components/local/handicraft/Layout";
 import HomestayLayout from "./components/local/homestay/Layout";
 import VendorTypeSelection from "./components/forms/vendorOptions.jsx";
-import Chatbot from './components/MultiLingualChatbot.jsx';
 
 // Import all dashboard pages
 import TransportDashboard from "./components/local/transport/pages/Dashboard";
@@ -104,7 +103,6 @@ function App() {
 
         </Routes>
       </div>
-      <Chatbot />
     </Router>
   );
 }
