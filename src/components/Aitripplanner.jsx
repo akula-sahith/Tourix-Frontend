@@ -69,32 +69,67 @@ const AITripPlanner = () => {
     );
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+ const handleSubmit = async (e) => {
+  e.preventDefault();
+  setIsSubmitting(true);
 
-    // Add user message
-    const userMessage = {
-      id: messages.length + 1,
-      type: 'user',
-      content: `Plan my trip from ${formData.startingPoint} to ${formData.destination} for ${formData.duration} days. Interested in: ${formData.interestedPlaces.join(', ')}. Budget: ₹${formData.priceRange[0]} - ₹${formData.priceRange[1]}`,
+  // Combine form data into a single message
+  const combinedMessage = `Plan my trip from ${formData.startingPoint} to ${formData.destination} for ${formData.duration} days. 
+Interested in: ${formData.interestedPlaces.join(', ') || "Not specified"}. 
+Budget: ₹${formData.priceRange[0]} - ₹${formData.priceRange[1]}`;
+
+  // Add user message
+  const userMessage = {
+    id: messages.length + 1,
+    type: 'user',
+    content: combinedMessage,
+    timestamp: new Date()
+  };
+  setMessages(prev => [...prev, userMessage]);
+
+  try {
+    const res = await fetch("http://localhost:5000/ai/plan", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message: combinedMessage })
+    });
+
+    const data = await res.json();
+
+    // ✅ Format backend response into readable text
+    let formattedReply = `🛫 **Trip to ${data.reply.destination}**\n\n`;
+    formattedReply += `**Budget:** ₹${data.reply.budget}\n`;
+    formattedReply += `**Duration:** ${data.reply.days} days\n\n`;
+
+    data.reply.itinerary.forEach(dayPlan => {
+      formattedReply += `📅 **Day ${dayPlan.day}:**\n`;
+      dayPlan.activities.forEach(activity => {
+        formattedReply += `• ${activity}\n`;
+      });
+      formattedReply += `\n`;
+    });
+
+    const aiResponse = {
+      id: messages.length + 2,
+      type: 'ai',
+      content: formattedReply,
       timestamp: new Date()
     };
 
-    setMessages(prev => [...prev, userMessage]);
+    setMessages(prev => [...prev, aiResponse]);
+  } catch (error) {
+    console.error("Error fetching AI response:", error);
+    const errorMessage = {
+      id: messages.length + 2,
+      type: 'ai',
+      content: "❌ Failed to get itinerary. Please try again later.",
+      timestamp: new Date()
+    };
+    setMessages(prev => [...prev, errorMessage]);
+  }
 
-    // Simulate API call
-    setTimeout(() => {
-      const aiResponse = {
-        id: messages.length + 2,
-        type: 'ai',
-        content: `🚀 **API Integration Pending** 🚀\n\nI would love to create a personalized itinerary for your ${formData.duration}-day trip from ${formData.startingPoint} to ${formData.destination}!\n\n**Your Preferences:**\n• Places: ${formData.interestedPlaces.join(', ')}\n• Budget: ₹${formData.priceRange[0]} - ₹${formData.priceRange[1]}\n\n*Once API is integrated, I'll provide detailed day-by-day itinerary, accommodation suggestions, local guides, and budget breakdown!*`,
-        timestamp: new Date()
-      };
-      setMessages(prev => [...prev, aiResponse]);
-      setIsSubmitting(false);
-    }, 2000);
-  };
+  setIsSubmitting(false);
+};
 
   const handleBackToDashboard = () => {
     window.location.href = '/touristDashboard';
