@@ -146,13 +146,13 @@ Budget: ₹${formData.priceRange[0]} - ₹${formData.priceRange[1]}`;
               className="flex items-center gap-2 text-green-700 hover:text-green-900 transition-colors duration-200 cursor-pointer"
             >
               <ArrowLeft className="w-5 h-5" />
-              <span className="font-medium italic">Back to Dashboard</span>
+              <span className="font-medium">Back to Dashboard</span>
             </button>
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-gradient-to-br from-green-600 to-emerald-700 rounded-xl flex items-center justify-center">
                 <Bot className="w-6 h-6 text-white" />
               </div>
-              <h1 className="text-2xl font-bold text-green-800 italic">AI Trip Planner</h1>
+              <h1 className="text-2xl font-serif text-transparent bg-gradient-to-r from-green-700 to-emerald-600 bg-clip-text">AI Trip Planner</h1>
             </div>
           </div>
         </div>
@@ -165,14 +165,14 @@ Budget: ₹${formData.priceRange[0]} - ₹${formData.priceRange[1]}`;
           {/* Left Panel - Form */}
           <div className="bg-white rounded-2xl shadow-lg border border-green-100 p-8 overflow-y-auto">
             <div className="mb-6">
-              <h2 className="text-2xl font-bold text-green-800 italic mb-2">Plan Your Journey</h2>
-              <p className="text-green-600 italic">Fill in your travel preferences and let AI create your perfect itinerary</p>
+              <h2 className="text-2xl font-serif text-transparent bg-gradient-to-r from-green-700 to-emerald-600 bg-clip-text mb-2">Plan Your Journey</h2>
+              <p className="text-green-600">Fill in your travel preferences and let AI create your perfect itinerary</p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Starting Point */}
               <div className="space-y-2">
-                <label className="flex items-center gap-2 text-green-700 font-semibold italic">
+                <label className="flex items-center gap-2 text-green-700 font-semibold">
                   <MapPin className="w-4 h-4" />
                   Starting Point
                 </label>
@@ -181,14 +181,14 @@ Budget: ₹${formData.priceRange[0]} - ₹${formData.priceRange[1]}`;
                   value={formData.startingPoint}
                   onChange={(e) => handleInputChange('startingPoint', e.target.value)}
                   placeholder="Enter your starting location"
-                  className="w-full px-4 py-3 border-2 border-green-200 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all duration-200 italic"
+                  className="w-full px-4 py-3 border-2 border-green-200 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all duration-200"
                   required
                 />
               </div>
 
               {/* Destination */}
               <div className="space-y-2">
-                <label className="flex items-center gap-2 text-green-700 font-semibold italic">
+                <label className="flex items-center gap-2 text-green-700 font-semibold">
                   <Mountain className="w-4 h-4" />
                   Destination in Jharkhand
                 </label>
@@ -197,14 +197,14 @@ Budget: ₹${formData.priceRange[0]} - ₹${formData.priceRange[1]}`;
                   value={formData.destination}
                   onChange={(e) => handleInputChange('destination', e.target.value)}
                   placeholder="Where would you like to visit?"
-                  className="w-full px-4 py-3 border-2 border-green-200 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all duration-200 italic"
+                  className="w-full px-4 py-3 border-2 border-green-200 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all duration-200"
                   required
                 />
               </div>
 
               {/* Interested Places */}
               <div className="space-y-2">
-                <label className="flex items-center gap-2 text-green-700 font-semibold italic">
+                <label className="flex items-center gap-2 text-green-700 font-semibold">
                   <Sparkles className="w-4 h-4" />
                   Places of Interest
                 </label>
@@ -214,7 +214,7 @@ Budget: ₹${formData.priceRange[0]} - ₹${formData.priceRange[1]}`;
                     onClick={() => setShowPlacesDropdown(!showPlacesDropdown)}
                     className="w-full px-4 py-3 border-2 border-green-200 rounded-xl focus:border-green-500 text-left flex items-center justify-between hover:border-green-300 transition-all duration-200 cursor-pointer"
                   >
-                    <span className="italic text-gray-600">
+                    <span className="text-gray-600">
                       {formData.interestedPlaces.length === 0 
                         ? 'Select places you want to visit' 
                         : `${formData.interestedPlaces.length} places selected`
@@ -230,7 +230,7 @@ Budget: ₹${formData.priceRange[0]} - ₹${formData.priceRange[1]}`;
                           key={index}
                           type="button"
                           onClick={() => handlePlaceSelect(place)}
-                          className={`w-full px-4 py-2 text-left hover:bg-green-50 transition-colors duration-200 cursor-pointer italic ${
+                          className={`w-full px-4 py-2 text-left hover:bg-green-50 transition-colors duration-200 cursor-pointer ${
                             formData.interestedPlaces.includes(place) ? 'bg-green-100 text-green-800' : 'text-gray-700'
                           }`}
                         >
@@ -247,7 +247,7 @@ Budget: ₹${formData.priceRange[0]} - ₹${formData.priceRange[1]}`;
                     {formData.interestedPlaces.map((place, index) => (
                       <span
                         key={index}
-                        className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm italic flex items-center gap-2 cursor-pointer hover:bg-green-200 transition-colors duration-200"
+                        className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm flex items-center gap-2 cursor-pointer hover:bg-green-200 transition-colors duration-200"
                         onClick={() => removePlaceFromSelection(place)}
                       >
                         {place}
@@ -260,14 +260,14 @@ Budget: ₹${formData.priceRange[0]} - ₹${formData.priceRange[1]}`;
 
               {/* Duration */}
               <div className="space-y-2">
-                <label className="flex items-center gap-2 text-green-700 font-semibold italic">
+                <label className="flex items-center gap-2 text-green-700 font-semibold">
                   <Calendar className="w-4 h-4" />
                   Duration (Days)
                 </label>
                 <select
                   value={formData.duration}
                   onChange={(e) => handleInputChange('duration', e.target.value)}
-                  className="w-full px-4 py-3 border-2 border-green-200 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all duration-200 italic cursor-pointer"
+                  className="w-full px-4 py-3 border-2 border-green-200 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all duration-200 cursor-pointer"
                   required
                 >
                   <option value="">Select duration</option>
@@ -283,14 +283,14 @@ Budget: ₹${formData.priceRange[0]} - ₹${formData.priceRange[1]}`;
 
               {/* Price Range */}
               <div className="space-y-2">
-                <label className="flex items-center gap-2 text-green-700 font-semibold italic">
+                <label className="flex items-center gap-2 text-green-700 font-semibold">
                   <DollarSign className="w-4 h-4" />
                   Budget Range
                 </label>
                 <div className="px-4 py-3 border-2 border-green-200 rounded-xl">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-gray-600 italic">₹{formData.priceRange[0].toLocaleString()}</span>
-                    <span className="text-sm text-gray-600 italic">₹{formData.priceRange[1].toLocaleString()}</span>
+                    <span className="text-sm text-gray-600">₹{formData.priceRange[0].toLocaleString()}</span>
+                    <span className="text-sm text-gray-600">₹{formData.priceRange[1].toLocaleString()}</span>
                   </div>
                   <input
                     type="range"
@@ -317,7 +317,7 @@ Budget: ₹${formData.priceRange[0]} - ₹${formData.priceRange[1]}`;
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white py-4 px-6 rounded-xl font-bold italic text-lg hover:from-green-700 hover:to-emerald-700 hover:scale-[1.02] hover:shadow-lg transition-all duration-300 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
+                className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white py-4 px-6 rounded-xl font-bold text-lg hover:from-green-700 hover:to-emerald-700 hover:scale-[1.02] hover:shadow-lg transition-all duration-300 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? (
                   <span className="flex items-center justify-center gap-2">
@@ -332,7 +332,7 @@ Budget: ₹${formData.priceRange[0]} - ₹${formData.priceRange[1]}`;
                 )}
               </button>
 
-              <p className="text-center text-sm text-green-600 italic">
+              <p className="text-center text-sm text-green-600">
                 *API Integration Pending - This will generate your personalized itinerary*
               </p>
             </form>
@@ -346,7 +346,7 @@ Budget: ₹${formData.priceRange[0]} - ₹${formData.priceRange[1]}`;
                 <Bot className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="font-bold italic">AI Travel Assistant</h3>
+                <h3 className="font-bold">AI Travel Assistant</h3>
                 <p className="text-sm opacity-90">Your personal Jharkhand guide</p>
               </div>
             </div>
@@ -377,7 +377,7 @@ Budget: ₹${formData.priceRange[0]} - ₹${formData.priceRange[1]}`;
                             ? 'bg-green-600 text-white rounded-br-md'
                             : 'bg-white border border-green-100 rounded-bl-md'
                         }`}>
-                          <p className={`text-sm leading-relaxed italic whitespace-pre-wrap ${
+                          <p className={`text-sm leading-relaxed whitespace-pre-wrap ${
                             message.type === 'user' ? 'text-white' : 'text-gray-800'
                           }`}>
                             {message.content}
@@ -400,7 +400,7 @@ Budget: ₹${formData.priceRange[0]} - ₹${formData.priceRange[1]}`;
                 <input
                   type="text"
                   placeholder="Chat feature coming soon... Use the form to plan your trip!"
-                  className="flex-1 px-4 py-2 border-2 border-gray-200 rounded-xl italic cursor-not-allowed"
+                  className="flex-1 px-4 py-2 border-2 border-gray-200 rounded-xl cursor-not-allowed"
                   disabled
                 />
                 <button
@@ -410,7 +410,7 @@ Budget: ₹${formData.priceRange[0]} - ₹${formData.priceRange[1]}`;
                   <Send className="w-4 h-4" />
                 </button>
               </div>
-              <p className="text-xs text-center text-gray-500 mt-2 italic">
+              <p className="text-xs text-center text-gray-500 mt-2">
                 Direct chat will be available after API integration
               </p>
             </div>

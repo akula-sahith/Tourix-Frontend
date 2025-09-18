@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import AboutJharkhand from "./aboutjharkhand.jsx";
 import Gallery from "./gallery.jsx";
 import Contact from "./contact.jsx";
+import Plan from "./plan.jsx";
 import Footer from "./footer.jsx";
 import { Link } from "react-router-dom";
 
@@ -10,7 +11,8 @@ const JharkhandTourismHero = () => {
   const galleryRef = useRef(null);
   const contactRef = useRef(null);
   const footerRef = useRef(null);
-  const heroRef = useRef(null); // Ref for the hero section itself
+  const heroRef = useRef(null);
+  const planRef = useRef(null); // Ref for the Plan section
 
   const [isVisible, setIsVisible] = useState(false);
   const [activeLink, setActiveLink] = useState('Home');
@@ -29,7 +31,7 @@ const JharkhandTourismHero = () => {
     'About': aboutRef,
     'Places': galleryRef, // Using Gallery for 'Places'
     // No ref for Culture, so it won't scroll
-    'Plan Trip': null, // No ref for Plan Trip, so it won't scroll
+    'Plan Trip': planRef, // No ref for Plan Trip, so it won't scroll
     'Contact': contactRef,
   };
 
@@ -45,7 +47,8 @@ const JharkhandTourismHero = () => {
   };
 
   return (
-    <div className="bg-white">
+    <div className="bg-white w-full overflow-x-hidden">
+
       {/* Fixed Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -195,6 +198,9 @@ const JharkhandTourismHero = () => {
       </div>
       <div ref={galleryRef}>
         <Gallery />
+      </div>
+      <div ref={planRef}>
+        <Plan />
       </div>
       <div ref={contactRef}>
         <Contact />

@@ -108,7 +108,7 @@ function App() {
 
         </Routes>
       </div>
-      {/* <FloatingChatbot/> */}
+      <FloatingChatbot/> 
     </Router>
   );
 }

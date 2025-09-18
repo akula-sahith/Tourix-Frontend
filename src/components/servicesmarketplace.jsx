@@ -1339,13 +1339,13 @@ const ServicesMarketplace = () => {
               className="flex items-center gap-2 text-green-700 hover:text-green-900 transition-colors duration-200 cursor-pointer"
             >
               <ArrowLeft className="w-5 h-5" />
-              <span className="font-medium italic">Back to Dashboard</span>
+              <span className="font-medium">Back to Dashboard</span>
             </button>
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-gradient-to-br from-green-600 to-emerald-700 rounded-xl flex items-center justify-center">
                 <Mountain className="w-6 h-6 text-white" />
               </div>
-              <h1 className="text-2xl font-bold text-green-800 italic">Services Marketplace</h1>
+              <h1 className="text-2xl font-serif text-transparent bg-gradient-to-r from-green-700 to-emerald-600 bg-clip-text">Services Marketplace</h1>
             </div>
           </div>
         </div>
@@ -1364,7 +1364,7 @@ const ServicesMarketplace = () => {
                 placeholder="Search guides, homestays, or transport..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border-2 border-green-200 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all duration-200 italic"
+                className="w-full pl-10 pr-4 py-3 border-2 border-green-200 rounded-xl focus:border-green-500 focus:ring-2 focus:ring-green-200 transition-all duration-200"
               />
             </div>
             
@@ -1373,7 +1373,7 @@ const ServicesMarketplace = () => {
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="px-4 py-2 border-2 border-green-200 rounded-xl focus:border-green-500 cursor-pointer italic"
+                className="px-4 py-2 border-2 border-green-200 rounded-xl focus:border-green-500 cursor-pointer"
               >
                 <option value="All">All Categories</option>
                 <option value="Guides">Guides</option>
@@ -1384,7 +1384,7 @@ const ServicesMarketplace = () => {
               <select
                 value={priceRange}
                 onChange={(e) => setPriceRange(e.target.value)}
-                className="px-4 py-2 border-2 border-green-200 rounded-xl focus:border-green-500 cursor-pointer italic"
+                className="px-4 py-2 border-2 border-green-200 rounded-xl focus:border-green-500 cursor-pointer"
               >
                 <option value="All">All Prices</option>
                 <option value="Budget">Budget (≤₹1500)</option>
@@ -1395,7 +1395,7 @@ const ServicesMarketplace = () => {
               <select
                 value={ratingFilter}
                 onChange={(e) => setRatingFilter(e.target.value)}
-                className="px-4 py-2 border-2 border-green-200 rounded-xl focus:border-green-500 cursor-pointer italic"
+                className="px-4 py-2 border-2 border-green-200 rounded-xl focus:border-green-500 cursor-pointer"
               >
                 <option value="All">All Ratings</option>
                 <option value="4.5+">4.5+ Stars</option>
@@ -1421,7 +1421,7 @@ const ServicesMarketplace = () => {
                     alt={service.name}
                     className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className="absolute top-4 left-4 bg-green-600 text-white px-3 py-1 rounded-full text-sm font-semibold italic">
+                  <div className="absolute top-4 left-4 bg-green-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
                     {service.category}
                   </div>
                   <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm text-green-800 px-2 py-1 rounded-full text-sm font-bold">
@@ -1433,10 +1433,10 @@ const ServicesMarketplace = () => {
                   <div className="flex items-start gap-3 mb-3">
                     <IconComponent className="w-6 h-6 text-green-600 mt-1" />
                     <div className="flex-1">
-                      <h3 className="text-lg font-bold text-gray-800 italic mb-1 line-clamp-2">
+                      <h3 className="text-lg font-bold text-gray-800 mb-1 line-clamp-2">
                         {service.name}
                       </h3>
-                      <p className="text-green-600 text-sm italic flex items-center gap-1">
+                      <p className="text-green-600 text-sm flex items-center gap-1">
                         <MapPin className="w-4 h-4" />
                         {service.location}
                       </p>
@@ -1461,7 +1461,7 @@ const ServicesMarketplace = () => {
                     </span>
                   </div>
                   
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-2 italic">
+                  <p className="text-gray-600 text-sm mb-4 line-clamp-2">
                     {service.description}
                   </p>
                   
@@ -1469,7 +1469,7 @@ const ServicesMarketplace = () => {
                     {service.specialties?.slice(0, 2).map((specialty, index) => (
                       <span
                         key={index}
-                        className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs italic"
+                        className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs"
                       >
                         {specialty}
                       </span>
@@ -1478,7 +1478,7 @@ const ServicesMarketplace = () => {
                   
                   <button
                     onClick={() => handleBookNow(service)}
-                    className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white py-3 px-4 rounded-xl font-semibold italic hover:from-green-700 hover:to-emerald-700 hover:shadow-lg transition-all duration-300"
+                    className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white py-3 px-4 rounded-xl font-semibold hover:from-green-700 hover:to-emerald-700 hover:shadow-lg transition-all duration-300"
                   >
                     Book Now
                   </button>
@@ -1494,8 +1494,8 @@ const ServicesMarketplace = () => {
             <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <Search className="w-12 h-12 text-gray-400" />
             </div>
-            <h3 className="text-xl font-bold text-gray-600 italic mb-2">No services found</h3>
-            <p className="text-gray-500 italic">Try adjusting your search criteria or filters</p>
+            <h3 className="text-xl font-bold text-gray-600 mb-2">No services found</h3>
+            <p className="text-gray-500">Try adjusting your search criteria or filters</p>
           </div>
         )}
       </main>
@@ -1506,7 +1506,7 @@ const ServicesMarketplace = () => {
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto">
             {/* Modal Header */}
             <div className="bg-gradient-to-r from-green-600 to-emerald-600 text-white p-6 flex justify-between items-center">
-              <h3 className="text-2xl font-bold italic">Service Details</h3>
+              <h3 className="text-2xl font-serif">Service Details</h3>
               <button
                 onClick={closeModal}
                 className="p-2 rounded-full hover:bg-white/20 transition-colors duration-200 cursor-pointer"
@@ -1529,15 +1529,15 @@ const ServicesMarketplace = () => {
                       <AlertCircle className="w-8 h-8 text-red-600" />
                     )}
                   </div>
-                  <h4 className={`text-xl font-bold mb-4 italic ${
+                  <h4 className={`text-xl font-bold mb-4 ${
                     bookingResult.success ? 'text-green-800' : 'text-red-800'
                   }`}>
                     {bookingResult.success ? 'Booking Confirmed!' : 'Booking Unavailable'}
                   </h4>
-                  <p className="text-gray-600 italic mb-6">{bookingResult.message}</p>
+                  <p className="text-gray-600 mb-6">{bookingResult.message}</p>
                   <button
                     onClick={closeModal}
-                    className="bg-gradient-to-r from-green-600 to-emerald-600 text-white py-3 px-6 rounded-xl font-semibold italic hover:from-green-700 hover:to-emerald-700 transition-all duration-300 cursor-pointer"
+                    className="bg-gradient-to-r from-green-600 to-emerald-600 text-white py-3 px-6 rounded-xl font-semibold hover:from-green-700 hover:to-emerald-700 transition-all duration-300 cursor-pointer"
                   >
                     Close
                   </button>
@@ -1559,14 +1559,14 @@ const ServicesMarketplace = () => {
                         {React.createElement(getServiceIcon(selectedService.category), {
                           className: "w-8 h-8 text-green-600"
                         })}
-                        <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold italic">
+                        <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">
                           {selectedService.category}
                         </span>
                       </div>
-                      <h4 className="text-2xl font-bold text-gray-800 italic mb-2">
+                      <h4 className="text-2xl font-serif text-transparent bg-gradient-to-r from-green-700 to-emerald-600 bg-clip-text mb-2">
                         {selectedService.name}
                       </h4>
-                      <p className="text-green-600 italic flex items-center gap-2 mb-3">
+                      <p className="text-green-600 flex items-center gap-2 mb-3">
                         <MapPin className="w-4 h-4" />
                         {selectedService.location}
                       </p>
@@ -1588,7 +1588,7 @@ const ServicesMarketplace = () => {
                         </span>
                       </div>
                       <div className="bg-green-50 p-4 rounded-xl">
-                        <p className="text-2xl font-bold text-green-800 italic">
+                        <p className="text-2xl font-bold text-green-800">
                           ₹{selectedService.price}
                           <span className="text-base font-normal text-green-600 ml-1">
                             {selectedService.priceUnit}
@@ -1603,20 +1603,20 @@ const ServicesMarketplace = () => {
                     {/* Left Column */}
                     <div className="space-y-4">
                       <div className="bg-gray-50 p-4 rounded-xl">
-                        <h5 className="font-bold text-gray-800 mb-2 italic">Description</h5>
-                        <p className="text-gray-600 italic leading-relaxed">
+                        <h5 className="font-bold text-gray-800 mb-2">Description</h5>
+                        <p className="text-gray-600 leading-relaxed">
                           {selectedService.description}
                         </p>
                       </div>
 
                       {selectedService.specialties && (
                         <div className="bg-gray-50 p-4 rounded-xl">
-                          <h5 className="font-bold text-gray-800 mb-2 italic">Specialties</h5>
+                          <h5 className="font-bold text-gray-800 mb-2">Specialties</h5>
                           <div className="flex flex-wrap gap-2">
                             {selectedService.specialties.map((specialty, index) => (
                               <span
                                 key={index}
-                                className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm italic"
+                                className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm"
                               >
                                 {specialty}
                               </span>
@@ -1627,8 +1627,8 @@ const ServicesMarketplace = () => {
 
                       {selectedService.languages && (
                         <div className="bg-gray-50 p-4 rounded-xl">
-                          <h5 className="font-bold text-gray-800 mb-2 italic">Languages</h5>
-                          <p className="text-gray-600 italic">
+                          <h5 className="font-bold text-gray-800 mb-2">Languages</h5>
+                          <p className="text-gray-600">
                             {selectedService.languages.join(', ')}
                           </p>
                         </div>
@@ -1638,13 +1638,13 @@ const ServicesMarketplace = () => {
                     {/* Right Column */}
                     <div className="space-y-4">
                       <div className="bg-gray-50 p-4 rounded-xl">
-                        <h5 className="font-bold text-gray-800 mb-3 italic">Contact Information</h5>
+                        <h5 className="font-bold text-gray-800 mb-3">Contact Information</h5>
                         <div className="space-y-2">
-                          <p className="text-gray-600 flex items-center gap-2 italic">
+                          <p className="text-gray-600 flex items-center gap-2">
                             <Phone className="w-4 h-4" />
                             {selectedService.contact}
                           </p>
-                          <p className="text-gray-600 flex items-center gap-2 italic">
+                          <p className="text-gray-600 flex items-center gap-2">
                             <Mail className="w-4 h-4" />
                             {selectedService.email}
                           </p>
@@ -1652,18 +1652,18 @@ const ServicesMarketplace = () => {
                       </div>
 
                       <div className="bg-gray-50 p-4 rounded-xl">
-                        <h5 className="font-bold text-gray-800 mb-2 italic">Capacity & Availability</h5>
+                        <h5 className="font-bold text-gray-800 mb-2">Capacity & Availability</h5>
                         <div className="space-y-2 text-sm">
-                          <p className="text-gray-600 flex items-center gap-2 italic">
+                          <p className="text-gray-600 flex items-center gap-2">
                             <Users className="w-4 h-4" />
                             {selectedService.capacity}
                           </p>
-                          <p className="text-gray-600 flex items-center gap-2 italic">
+                          <p className="text-gray-600 flex items-center gap-2">
                             <Clock className="w-4 h-4" />
                             {selectedService.availability}
                           </p>
                           {selectedService.experience && (
-                            <p className="text-gray-600 flex items-center gap-2 italic">
+                            <p className="text-gray-600 flex items-center gap-2">
                               <Shield className="w-4 h-4" />
                               {selectedService.experience} experience
                             </p>
@@ -1673,12 +1673,12 @@ const ServicesMarketplace = () => {
 
                       {selectedService.amenities && (
                         <div className="bg-gray-50 p-4 rounded-xl">
-                          <h5 className="font-bold text-gray-800 mb-2 italic">Amenities</h5>
+                          <h5 className="font-bold text-gray-800 mb-2">Amenities</h5>
                           <div className="grid grid-cols-2 gap-1 text-sm">
                             {selectedService.amenities.slice(0, 6).map((amenity, index) => (
                               <div key={index} className="flex items-center gap-2 text-gray-600">
                                 <Check className="w-3 h-3 text-green-500" />
-                                <span className="italic">{amenity}</span>
+                                <span>{amenity}</span>
                               </div>
                             ))}
                           </div>
@@ -1692,17 +1692,17 @@ const ServicesMarketplace = () => {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                       {selectedService.meals && (
                         <div className="bg-green-50 p-4 rounded-xl">
-                          <h6 className="font-bold text-green-800 mb-2 italic flex items-center gap-2">
+                          <h6 className="font-bold text-green-800 mb-2 flex items-center gap-2">
                             <Utensils className="w-4 h-4" />
                             Meals
                           </h6>
-                          <p className="text-sm text-green-700 italic">{selectedService.meals}</p>
+                          <p className="text-sm text-green-700">{selectedService.meals}</p>
                         </div>
                       )}
                       {selectedService.checkIn && (
                         <div className="bg-blue-50 p-4 rounded-xl">
-                          <h6 className="font-bold text-blue-800 mb-2 italic">Check-in/out</h6>
-                          <p className="text-sm text-blue-700 italic">
+                          <h6 className="font-bold text-blue-800 mb-2">Check-in/out</h6>
+                          <p className="text-sm text-blue-700">
                             In: {selectedService.checkIn}<br />
                             Out: {selectedService.checkOut}
                           </p>
@@ -1710,8 +1710,8 @@ const ServicesMarketplace = () => {
                       )}
                       {selectedService.hostFamily && (
                         <div className="bg-purple-50 p-4 rounded-xl">
-                          <h6 className="font-bold text-purple-800 mb-2 italic">Host Family</h6>
-                          <p className="text-sm text-purple-700 italic">{selectedService.hostFamily}</p>
+                          <h6 className="font-bold text-purple-800 mb-2">Host Family</h6>
+                          <p className="text-sm text-purple-700">{selectedService.hostFamily}</p>
                         </div>
                       )}
                     </div>
@@ -1721,17 +1721,17 @@ const ServicesMarketplace = () => {
                   {selectedService.category === 'Transport' && (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                       <div className="bg-blue-50 p-4 rounded-xl">
-                        <h6 className="font-bold text-blue-800 mb-2 italic">Vehicle Details</h6>
+                        <h6 className="font-bold text-blue-800 mb-2">Vehicle Details</h6>
                         <div className="space-y-1 text-sm text-blue-700">
-                          <p className="italic">Type: {selectedService.vehicleType}</p>
-                          <p className="italic">Fuel: {selectedService.fuelType}</p>
-                          <p className="italic">Driver: {selectedService.driverIncluded ? 'Included' : 'Not Included'}</p>
+                          <p>Type: {selectedService.vehicleType}</p>
+                          <p>Fuel: {selectedService.fuelType}</p>
+                          <p>Driver: {selectedService.driverIncluded ? 'Included' : 'Not Included'}</p>
                         </div>
                       </div>
                       <div className="bg-green-50 p-4 rounded-xl">
-                        <h6 className="font-bold text-green-800 mb-2 italic">Service Area</h6>
-                        <p className="text-sm text-green-700 italic">{selectedService.serviceArea}</p>
-                        <p className="text-sm text-green-600 mt-1 italic">{selectedService.bookingPolicy}</p>
+                        <h6 className="font-bold text-green-800 mb-2">Service Area</h6>
+                        <p className="text-sm text-green-700">{selectedService.serviceArea}</p>
+                        <p className="text-sm text-green-600 mt-1">{selectedService.bookingPolicy}</p>
                       </div>
                     </div>
                   )}
@@ -1741,7 +1741,7 @@ const ServicesMarketplace = () => {
                     <button
                       onClick={handleFinalBooking}
                       disabled={isBooking}
-                      className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white py-4 px-6 rounded-xl font-bold italic text-lg hover:from-green-700 hover:to-emerald-700 hover:shadow-lg transition-all duration-300 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
+                      className="w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white py-4 px-6 rounded-xl font-bold text-lg hover:from-green-700 hover:to-emerald-700 hover:shadow-lg transition-all duration-300 cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
                     >
                       {isBooking ? (
                         <span className="flex items-center justify-center gap-2">
@@ -1755,7 +1755,7 @@ const ServicesMarketplace = () => {
                         </span>
                       )}
                     </button>
-                    <p className="text-center text-sm text-gray-500 mt-3 italic">
+                    <p className="text-center text-sm text-gray-500 mt-3">
                       *Future: Integration with payment gateway and booking system
                     </p>
                   </div>
