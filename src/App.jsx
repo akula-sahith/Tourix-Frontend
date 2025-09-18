@@ -13,7 +13,8 @@ import GuideLayout from "./components/local/guide/Layout";
 import HandicraftLayout from "./components/local/handicraft/Layout";
 import HomestayLayout from "./components/local/homestay/Layout";
 import VendorTypeSelection from "./components/forms/vendorOptions.jsx";
-
+import TourixAdminDashboard from './components/AdminDashboard.jsx';
+import FloatingChatbot from './components/chatbot.jsx';
 // Import all dashboard pages
 import TransportDashboard from "./components/local/transport/pages/Dashboard";
 import TransportEarnings from "./components/local/transport/pages/Earnings";
@@ -43,6 +44,9 @@ import HomestayApplied from "./components/local/homestay/pages/Applied";
 import HomestayApproved from "./components/local/homestay/pages/Approved";
 import HomestayBookings from "./components/local/homestay/pages/Bookings";
 import MainSelection from "./components/pages/MainSelection.jsx";
+
+import VendorDashboard from './components/VendorDashboard.jsx';
+
 //import VendorHome from "./components/vendorhome.jsx";
 // You can create a combined component for the home page if needed.
 const HomePage = () => (
@@ -65,7 +69,8 @@ function App() {
           <Route path='/trip'  element={<Tripplanner />}/>
           <Route path='/services' element={<Services />} />
           <Route path="/chooseType" element={<VendorTypeSelection/>}/>
-
+          <Route path="/vendordashboard" element={<VendorDashboard/>}/>
+          <Route path="/admindashboard" element={<TourixAdminDashboard/>}/>
           <Route path="/vendorhome" element={<MainSelection />} />
         <Route path="/transport" element={<TransportLayout />}>
           <Route index element={<TransportDashboard />} />
@@ -103,6 +108,7 @@ function App() {
 
         </Routes>
       </div>
+      {/* <FloatingChatbot/> */}
     </Router>
   );
 }
