@@ -108,9 +108,12 @@ const FloatingChatbot = () => {
 
       {/* Chat Panel */}
       {isOpen && (
-        <div className="fixed inset-0 z-40 flex justify-end">
-          {/* Backdrop */}
-          <div className="absolute inset-0 bg-black bg-opacity-25 backdrop-blur-sm" onClick={toggleChat}></div>
+        <>
+          {/* Blur Backdrop - Updated to not darken the page */}
+          <div 
+            className="fixed inset-0 z-30 backdrop-blur-sm bg-white/5" 
+            onClick={toggleChat}
+          ></div>
           
           {/* Chat Container - Adjusted size for a more compact, professional feel */}
           <div
@@ -120,7 +123,7 @@ const FloatingChatbot = () => {
             } sm:max-w-md lg:max-w-lg`}
           >
             {/* Header with enhanced gradient */}
-            <div className="bg-gradient-to-r from-emerald-500 via-teal-500 to-blue-600 p-4 flex justify-between items-center rounded-tl-2xl relative overflow-hidden">
+            <div className="bg-gradient-to-r from-emerald-500 via-teal-500 to-blue-600 p-4 flex justify-between items-center rounded-tl-2xl rounded-tr-2xl relative overflow-hidden">
               {/* Animated background pattern */}
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/20 via-teal-600/20 to-blue-700/20 animate-gradient-x"></div>
               
@@ -199,7 +202,7 @@ const FloatingChatbot = () => {
               </div>
             </div>
           </div>
-        </div>
+        </>
       )}
 
       {/* Enhanced custom styles for animations */}
