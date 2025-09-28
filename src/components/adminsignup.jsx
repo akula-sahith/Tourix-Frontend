@@ -127,7 +127,7 @@ const AdminAuth = ({ isOpen = true }) => {
       await new Promise(resolve => setTimeout(resolve, 1500));
       console.log(`${provider} authentication completed successfully`);
       alert(`Successfully signed in as admin with ${provider}!`);
-      navigate('/adminhome');
+      navigate('/admindashboard');
     } catch (error) {
       console.error(`${provider} admin authentication error:`, error);
       setErrors({ general: `${provider} authentication failed. Please try again.` });

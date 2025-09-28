@@ -131,15 +131,13 @@ const VendorAuth = ({ isOpen = true, onClose = () => {} }) => {
     try {
       if (isLoginView) {
         const userCredential = await signInWithEmailAndPassword(auth, formData.email, formData.password);
-        const uid = userCredential.user.uid; 
         console.log("Vendor Login successful!", userCredential.user);
         alert("Vendor signed in successfully!");
         onClose();
-        navigate(`/vendordashboard/${uid}`);
+        navigate('/vendorhome');
       } else {
         const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
         console.log("Vendor Signup successful!", userCredential.user);
-        const uid = userCredential.user.uid; 
         // Submit data to backend
         await submitToBackend({
           firstName: formData.firstName,
