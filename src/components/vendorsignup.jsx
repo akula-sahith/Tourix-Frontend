@@ -135,7 +135,7 @@ const VendorAuth = ({ isOpen = true, onClose = () => {} }) => {
         console.log("Vendor Login successful!", userCredential.user);
         alert("Vendor signed in successfully!");
         onClose();
-        navigate('/vendorhome');
+        navigate(`/vendordashboard/${uid}`);
       } else {
         const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
         console.log("Vendor Signup successful!", userCredential.user);

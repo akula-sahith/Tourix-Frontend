@@ -69,7 +69,7 @@ function App() {
           <Route path='/trip'  element={<Tripplanner />}/>
           <Route path='/services' element={<Services />} />
           <Route path="/chooseType" element={<VendorTypeSelection/>}/>
-          <Route path="/vendordashboard" element={<VendorDashboard/>}/>
+          <Route path="/vendordashboard/:vendorId" element={<VendorDashboard />} />
           <Route path="/admindashboard" element={<TourixAdminDashboard/>}/>
           <Route path="/vendorhome" element={<MainSelection />} />
         <Route path="/transport" element={<TransportLayout />}>
