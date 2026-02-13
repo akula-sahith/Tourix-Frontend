@@ -8,7 +8,7 @@ import AdminSignup from "./components/adminsignup.jsx";
 import TouristDashboard from "./components/touristDashboard.jsx";
 import Tripplanner from "./components/Aitripplanner.jsx";
 import Services from "./components/servicesmarketplace.jsx";
-import VendorTypeSelection from "./components/forms/vendorOptions.jsx";
+// import VendorTypeSelection from "./components/forms/vendorOptions.jsx";
 import TourixAdminDashboard from './components/AdminDashboard.jsx';
 import FloatingChatbot from './components/chatbot.jsx';
 // Import all dashboard pages
@@ -37,7 +37,7 @@ function App() {
           <Route path='/touristDashboard' element={<TouristDashboard/>}/>
           <Route path='/trip'  element={<Tripplanner />}/>
           <Route path='/services' element={<Services />} />
-          <Route path="/chooseType" element={<VendorTypeSelection/>}/>
+          {/* <Route path="/chooseType" element={<VendorTypeSelection/>}/> */}
           <Route path="/vendordashboard/:vendorId" element={<VendorDashboard />} />
           <Route path="/admindashboard" element={<TourixAdminDashboard/>}/>
      

@@ -88,7 +88,7 @@ Budget: ₹${formData.priceRange[0]} - ₹${formData.priceRange[1]}`;
   setMessages(prev => [...prev, userMessage]);
 
   try {
-    const res = await fetch("http://localhost:5000/ai/plan", {
+    const res = await fetch("https://tourix-backend.onrender.com/ai/plan", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: combinedMessage })

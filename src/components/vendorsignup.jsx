@@ -96,7 +96,7 @@ const VendorAuth = ({ isOpen = true, onClose = () => {} }) => {
 
   const submitToBackend = async (userData) => {
     try {
-      const response = await fetch('http://localhost:5000/vendor/register', {
+      const response = await fetch('https://tourix-backend.onrender.com/vendor/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -134,7 +134,7 @@ const VendorAuth = ({ isOpen = true, onClose = () => {} }) => {
         console.log("Vendor Login successful!", userCredential.user);
         alert("Vendor signed in successfully!");
         onClose();
-        navigate('/vendorhome');
+        navigate(`/vendordashboard/${userCredential.user.uid}`);
       } else {
         const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
         console.log("Vendor Signup successful!", userCredential.user);
