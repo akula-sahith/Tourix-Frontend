@@ -131,7 +131,7 @@ const JharkhandTourismHero = () => {
   poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23065f46;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23064e3b;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grad)'/%3E%3C/svg%3E"
 >
   <source
-    src="https://res.cloudinary.com/dihdjq2u4/video/upload/q_auto,f_auto/A_Drone_Trip_of_Jharkhand___Travel_Guide___4K_l_Nature_l_People_l_Culture_l_Our_Jharkhand_l_lryxze.mp4"
+    src="https://res.cloudinary.com/dihdjq2u4/video/upload/v1776234099/Video_Project_h7elxt.mp4"
     type="video/mp4"
   />
 </video>

@@ -118,10 +118,10 @@ const AboutJharkhandSection = () => {
             >
               <div className="relative group overflow-hidden rounded-2xl shadow-2xl">
                 <img 
-                  src="src/assets/aboutjharkhand.jpg"
-                  alt="Jharkhand Nature"
-                  className="w-full h-96 object-cover transform group-hover:scale-110 transition-transform duration-700"
-                />
+  src="https://res.cloudinary.com/dihdjq2u4/image/upload/q_auto,f_auto/aboutjharkhand_rjkgwm.jpg"
+  alt="Jharkhand Nature"
+  className="w-full h-96 object-cover transform group-hover:scale-110 transition-transform duration-700"
+/>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent group-hover:from-black/30 transition-all duration-300"></div>
               </div>
             </div>
@@ -231,7 +231,10 @@ const AboutJharkhandSection = () => {
                   playsInline
                   poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800'%3E%3Cdefs%3E%3ClinearGradient id='videoGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%2306b6d4;stop-opacity:1' /%3E%3Cstop offset='50%25' style='stop-color:%2310b981;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23059669;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23videoGrad)'/%3E%3Ccircle cx='600' cy='400' r='80' fill='white' opacity='0.9'/%3E%3Cpolygon points='570,360 570,440 640,400' fill='%23059669'/%3E%3Ctext x='600' y='500' text-anchor='middle' fill='white' font-size='32' font-weight='bold'%3ETour Jharkhand%3C/text%3E%3C/svg%3E"
                 >
-                  <source src="src\components\landingpage\tour.mp4" type="video/mp4" />
+                  <source
+    src="https://res.cloudinary.com/dihdjq2u4/video/upload/q_auto,f_auto/A_Drone_Trip_of_Jharkhand___Travel_Guide___4K_l_Nature_l_People_l_Culture_l_Our_Jharkhand_l_lryxze.mp4"
+    type="video/mp4"
+  />
                   <div className="w-full h-96 lg:h-[500px] bg-gradient-to-br from-cyan-500 via-emerald-500 to-emerald-600 flex items-center justify-center">
                     <div className="text-center text-white">
                       <div className="w-20 h-20 mx-auto mb-4 bg-white rounded-full flex items-center justify-center">
